@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09090e" />
+  <meta name="description" content="GTF DE 03 – digitales Handbuch und interne Wissensübersicht." />
+  <title>GTF DE 03 • Handbuch</title>
+  <style>
+:root{color-scheme:dark;--bg:#080910;--panel:#17171c;--panel2:#202024;--panel3:#26262b;--line:#323238;--line-soft:#27272d;--fg:#f5f4f3;--muted:#99999c;--orange:#ff962a;--orange2:#ffad51;--green:#6ed99f;--radius:17px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--fg);margin:0;min-height:100vh;overflow-x:hidden}button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--orange);outline-offset:3px}button{color:inherit}::selection{background:#b86c25;color:white}svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;flex:none}
+.sky{position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse 90% 75% at -13% 7%,rgba(78,40,24,.14),transparent 69%),radial-gradient(ellipse 90% 90% at 97% 105%,rgba(13,25,58,.29),transparent 75%),#08090f}.sky:before,.sky:after{content:"";position:absolute;inset:0;background-repeat:repeat;background-size:430px 340px;background-image:radial-gradient(1px 1px at 18px 40px,#fff9 90%,transparent),radial-gradient(1.5px 1.5px at 100px 180px,#b4cef8b0 70%,transparent),radial-gradient(1px 1px at 270px 25px,#fff8 90%,transparent),radial-gradient(2px 2px at 390px 270px,#fff8 70%,transparent),radial-gradient(1px 1px at 320px 148px,#fff5 90%,transparent),radial-gradient(1px 1px at 206px 280px,#c7d8ef9e 90%,transparent);opacity:.68}.sky:after{background-size:670px 510px;transform:translate(86px,30px);opacity:.5;filter:blur(.4px)}
+.app-shell{width:min(1260px,calc(100% - 44px));margin:0 auto}.topbar{display:flex;align-items:center;justify-content:space-between;height:107px;gap:28px}.topbar-brand{display:flex;align-items:center;gap:10px;min-width:277px}.brand-mark{height:59px;width:59px;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#ff9b2f18 30%,transparent 68%)}.brand-mark:before{content:"";position:absolute;inset:5px;border:2px dotted #9f5527;border-radius:50%;box-shadow:0 0 13px #bb682833}.brand-shield{width:38px;height:42px;display:grid;place-items:center;clip-path:polygon(50% 0,92% 15%,88% 67%,50% 100%,12% 67%,8% 15%);background:linear-gradient(130deg,#fcb052,#7e351b 55%,#341915);border:2px solid #f3a15d;color:#fff1d0;font-size:13px;font-family:Georgia,serif;font-weight:900;text-shadow:0 1px 4px #000;letter-spacing:-1px}.brand-copy{display:flex;align-items:flex-start;flex-direction:column;gap:5px}.brand-copy strong{font-size:19px;letter-spacing:-.6px}.brand-copy span{font-size:10px;color:var(--orange);letter-spacing:1.4px;font-weight:900;border:1px solid #34343b;background:#18191d;border-radius:8px;padding:7px 11px;white-space:nowrap}.search-trigger{min-width:205px;width:260px;display:flex;justify-content:space-between;align-items:center;background:#1c1d22;border:2px solid #303138;border-radius:24px;padding:9px 12px;color:#959598;text-align:left;font-weight:600;font-size:12px}.search-trigger-left{display:flex;align-items:center;gap:10px}.search-trigger-left svg{height:20px;width:20px}.search-trigger kbd{background:#303034;border-radius:6px;font-size:12px;color:#eee;padding:4px 8px;font-weight:800}.topbar-actions{display:flex;align-items:center;gap:9px}.header-chip,.user-chip{height:40px;display:flex;align-items:center;gap:7px;border:2px solid #303038;background:#1c1d22;border-radius:12px;padding:0 11px;font-weight:800;white-space:nowrap}.header-chip svg{width:17px}.orange{color:var(--orange)}.user-chip{border-radius:22px;font-size:12px;padding:3px 11px 3px 5px;gap:9px}.user-avatar{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#f6a43d,#733815);font-weight:1000;color:#fff;border:1px solid #d98936}.user-dot{width:6px;height:6px;border-radius:50%;background:#59d495;box-shadow:0 0 7px #59d495}.hamburger{display:none}
+.workspace{display:grid;grid-template-columns:215px minmax(0,1fr);align-items:start;gap:28px;padding-top:63px}.sidebar{position:sticky;top:20px;margin-top:0;z-index:3}.sidebar-top-decoration{position:absolute;font-size:23px;top:-31px;left:56px;color:#ffa537;transform:rotate(-15deg);text-shadow:0 0 15px #df782e66}.sidebar-inner{border:2px solid #2c2c33;background:rgba(24,24,29,.95);border-radius:20px;padding:15px 12px 14px;box-shadow:0 14px 50px #0005}.nav-label{padding:8px 12px 12px;color:#727276;font-size:10px;letter-spacing:1.5px;font-weight:900}.sub-label{padding-top:2px}.nav-item{display:flex;align-items:center;gap:13px;width:100%;border:0;border-radius:12px;background:transparent;color:#b8b8bc;padding:13px 12px;text-align:left;font-size:13px;font-weight:700;min-height:47px}.nav-item svg{width:19px;height:19px;color:#adaeb0}.nav-item:hover{background:#29272a;color:white}.nav-item.active{background:rgba(163,91,29,.27);color:var(--orange)}.nav-item.active svg{color:var(--orange)}.nav-item .chevron{margin-left:auto;height:15px;width:15px}.nav-divider{height:1px;margin:14px 10px;background:#2d2d32}.sidebar-info{color:#b3b3b4;padding:10px 10px 16px;font-size:12px;line-height:1.8}.sidebar-info small{color:#757579;margin-left:12px}.status-dot{display:inline-block;width:7px;height:7px;background:var(--orange);border-radius:50%;margin-right:4px;box-shadow:0 0 10px #ff962a70}.sidebar-footer{border-top:1px solid #292930;font-size:11px;line-height:1.8;padding:13px 11px 4px;color:#69696d}.main-area{min-width:0}.announcement{min-height:46px;border:2px solid #2c2d33;border-radius:14px;background:#19191e;display:flex;align-items:center;justify-content:center;gap:10px;padding:11px 17px;margin-bottom:14px;color:#a6a6a6;font-size:12px;font-weight:750;flex-wrap:wrap;text-align:center;box-shadow:0 9px 32px #0002}.announce-icon{color:var(--orange)}.announce-icon svg{width:15px;height:15px}.announce-label{letter-spacing:1.3px;font-size:11px}.announce-msg b{color:var(--orange)}
+.panel{background:rgba(24,24,29,.97);border:2px solid #303038;border-radius:18px;padding:21px 22px;box-shadow:0 10px 35px #0002}.panel+.panel{margin-top:14px}.panel-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:17px;flex-wrap:wrap}.panel-title{font-size:16px;letter-spacing:-.3px;margin:0;font-weight:800;display:flex;align-items:center;gap:10px}.panel-title>svg,.panel-title>.icon-wrap{color:var(--orange)}.panel-subtitle{font-size:12px;color:#89898e;margin:7px 0 0}.small-chip{padding:8px 11px;border-radius:13px;color:#e7e7e8;background:#18181d;border:2px solid #33343a;font-size:11px;font-weight:800}.tag{display:inline-flex;align-items:center;gap:5px;color:var(--orange);border:1px solid #65451f;background:#422b17;border-radius:8px;padding:5px 9px;font-weight:800;font-size:10px;letter-spacing:.25px}.tag.muted-tag{color:#bebec1;background:#252529;border-color:#3a3a42}.tag.green-tag{color:#7bd9a9;background:#203529;border-color:#345742}
+.welcome{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;padding:19px 21px}.eyebrow{font-size:11px;font-weight:900;letter-spacing:1.5px;color:var(--orange);margin:0 0 7px}.welcome h1{font-size:clamp(20px,2.6vw,29px);margin:0 0 7px;letter-spacing:-.7px}.welcome h1 span{color:var(--orange)}.welcome p{font-size:12px;color:#99999e;margin:0;line-height:1.6}.welcome-icon{border:1px solid #4e3622;background:linear-gradient(135deg,#4e321c,#281e1b);border-radius:14px;width:56px;height:56px;display:grid;place-items:center;color:var(--orange);flex:none}.welcome-icon svg{height:29px;width:29px}.stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{border-radius:12px;background:#232328;padding:14px 12px;display:flex;align-items:center;gap:10px;min-width:0}.stat-icon{color:var(--orange)}.stat-icon svg{width:18px;height:18px}.stat-caption{color:#a3a3a6;font-size:11px;font-weight:750;white-space:nowrap}.stat-value{font-size:25px;line-height:1;letter-spacing:-1px;font-weight:900;margin-left:auto}.stat-change{font-size:10px;color:var(--green);font-weight:800;padding:5px 7px;background:#284034;border-radius:10px;white-space:nowrap}.stat-change.gray{background:#36363b;color:#b9b9bf}.stat-change.ochre{background:#3d2f1e;color:#f5b369}.list-rows{display:flex;flex-direction:column;gap:4px}.activity-row{display:flex;align-items:center;gap:12px;background:#222227;border-radius:9px;padding:11px 12px;min-height:43px;border:1px solid transparent;text-align:left;width:100%}.activity-row:hover,.activity-row:focus-visible{border-color:#6b4b27;background:#29262a}.activity-row .row-icon{color:var(--orange);display:flex}.activity-row .row-name{font-size:12px;font-weight:750;flex:1;min-width:0}.activity-row .row-desc{color:#a0a0a4;font-weight:500}.activity-row .row-right{color:#929296;font-size:11px;font-weight:700;white-space:nowrap}.activity-row .row-right svg{width:14px;height:14px}.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.bottom-grid .panel{margin:0}.empty-note{color:#96969a;font-size:12px;font-style:italic;margin:0;line-height:1.7}.quick-links{display:grid;grid-template-columns:1fr 1fr;gap:8px}.quick-link{padding:11px 10px;display:flex;align-items:center;gap:9px;border:1px solid #393940;background:#222227;border-radius:10px;text-align:left;font-size:12px;font-weight:700;color:#ccc}.quick-link svg{color:var(--orange);width:16px}.quick-link:hover{border-color:#ba7a3f;color:#fff}.small-link{color:var(--orange);font-weight:750;background:none;border:0;font-size:11px}.small-link:hover{text-decoration:underline}.site-footer{display:flex;justify-content:space-between;color:#66666d;font-size:10px;gap:14px;padding:25px 3px 30px}
+.breadcrumb{color:#87878d;font-size:11px;font-weight:700;display:flex;align-items:center;gap:8px;margin:1px 0 13px}.breadcrumb strong{color:#d0d0d3}.breadcrumb svg{width:12px;height:12px}.chapter-head{display:flex;justify-content:space-between;align-items:center;gap:18px}.chapter-icon{width:49px;height:49px;display:grid;place-items:center;border-radius:13px;background:#422b18;border:1px solid #62401f;color:var(--orange);flex:none}.chapter-icon svg{width:23px;height:23px}.chapter-name{font-size:24px;margin:0 0 5px;letter-spacing:-.6px}.chapter-desc{margin:0;color:#a1a1a6;font-size:12px;line-height:1.5}.chapter-meta{display:flex;align-items:center;gap:8px;margin-top:13px;flex-wrap:wrap}.action-btn{border-radius:11px;background:#24242a;border:1px solid #44444a;padding:10px 12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:800;white-space:nowrap}.action-btn:hover{background:#302a27;border-color:#8d5a2c}.action-btn svg{width:16px;height:16px}.action-btn.favorited{background:#47301c;color:var(--orange);border-color:#805221}.chapter-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:14px;margin-top:14px;align-items:start}.chapter-layout .panel{margin:0}.section-block{padding:18px 0;border-bottom:1px solid #34343a}.section-block:first-child{padding-top:3px}.section-block:last-child{border-bottom:0;padding-bottom:3px}.section-heading{margin:0 0 12px;font-size:14px;display:flex;gap:9px;align-items:center}.section-index{font-size:11px;color:var(--orange);background:#3f2a1d;padding:5px 7px;border-radius:7px}.rule-list{margin:0;padding-left:20px;color:#c5c5c8;line-height:1.9;font-size:12px}.rule-list li{padding-left:3px;margin-bottom:5px}.content-note{border:1px solid #70502a;background:#2b241f;border-radius:11px;color:#c8b49a;padding:14px;font-size:11px;line-height:1.7;margin-top:18px}.content-note strong{color:#ffbc6e}.toc-panel{position:sticky;top:20px}.toc-title{font-weight:800;font-size:12px;margin:0 0 12px}.toc-link{width:100%;display:flex;text-align:left;gap:8px;align-items:center;padding:10px 8px;background:transparent;color:#adadb0;border:0;border-radius:8px;font-size:11px}.toc-link:hover{background:#27272c;color:#fff}.toc-link span{color:var(--orange);font-size:10px}.notes-box{margin-top:16px;border-top:1px solid #34343a;padding-top:17px}.notes-box label{font-size:12px;font-weight:800;display:block;margin-bottom:9px}.notes-box textarea{resize:vertical;min-height:95px;width:100%;border-radius:10px;border:1px solid #414148;background:#222227;color:#eee;padding:11px;font-size:12px;line-height:1.5}.save-note{margin-top:9px;width:100%;background:#4c321c;border-color:#80552b;color:#ffbb70}.guide-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.guide-card{background:#222227;border:1px solid #37373d;padding:17px;display:flex;flex-direction:column;text-align:left;border-radius:12px;min-height:138px}.guide-card:hover{border-color:#c47d3a;background:#2a2627}.guide-card-top{display:flex;justify-content:space-between;align-items:center}.guide-card-top svg{color:var(--orange);width:22px;height:22px}.guide-card h3{font-size:14px;margin:13px 0 6px}.guide-card p{font-size:11px;margin:0;color:#a4a4a9;line-height:1.5}.guide-card .open-arrow{color:#9b9ba0;font-size:18px}.settings-grid{display:grid;grid-template-columns:1fr;gap:14px}.setting-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #33333b;gap:20px}.setting-row:last-child{border:0}.setting-row strong{font-size:12px}.setting-row p{color:#99999f;font-size:11px;margin:5px 0 0;line-height:1.5}.outline-danger{border-color:#72413e;color:#ff9991;background:#392222}.outline-danger:hover{background:#482627}.empty-search{text-align:center;padding:28px 18px;color:#999;font-size:13px}.search-backdrop[hidden]{display:none}.search-backdrop{position:fixed;z-index:100;inset:0;background:#050508cc;display:flex;align-items:flex-start;justify-content:center;padding:12vh 20px 20px;backdrop-filter:blur(7px)}.search-modal{width:min(600px,100%);background:#1c1c22;border:2px solid #464047;border-radius:17px;box-shadow:0 30px 120px #000b;overflow:hidden}.modal-searchline{display:flex;align-items:center;gap:11px;padding:17px;border-bottom:1px solid #34343a}.modal-searchline svg{width:22px;height:22px}.modal-searchline input{min-width:0;background:transparent;border:0;outline:0;color:#fff;flex:1;font-size:14px}.esc-button{background:#303036;border:1px solid #49494e;border-radius:6px;padding:4px 7px;font-size:10px;color:#aaa}.search-modal-heading{font-size:10px;letter-spacing:1.5px;color:#8d8d92;padding:16px 18px 8px;font-weight:900}.search-results{max-height:380px;overflow:auto;padding:0 10px 11px}.search-result{display:flex;gap:11px;align-items:center;width:100%;background:transparent;border:0;padding:12px 10px;border-radius:9px;text-align:left;color:#ececef}.search-result:hover,.search-result.selected{background:#34302d}.search-result svg{color:var(--orange);width:19px;height:19px}.search-result div{flex:1}.search-result strong{font-size:12px}.search-result small{font-size:11px;color:#999;display:block;margin-top:3px}.search-hint{border-top:1px solid #34343a;padding:12px 18px;color:#77777c;font-size:10px}.search-hint span{color:#aaa}.toast{position:fixed;bottom:22px;right:22px;z-index:120;background:#2c302b;border:1px solid #507755;border-radius:11px;padding:12px 17px;font-size:12px;font-weight:700;box-shadow:0 12px 35px #0008;opacity:0;transform:translateY(20px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateY(0)}.mobile-shade{display:none}
+@media(max-width:1100px){.app-shell{width:min(100% - 30px,1100px)}.workspace{gap:18px;grid-template-columns:202px minmax(0,1fr)}.stat{flex-wrap:wrap;gap:5px}.stat-caption{flex:1}.stat-value{margin-left:0}.stat-change{margin-left:auto}.chapter-layout{grid-template-columns:minmax(0,1fr) 205px}.topbar-brand{min-width:245px}.search-trigger{min-width:125px;width:205px}.search-trigger-left{font-size:0}}
+@media(max-width:800px){.topbar{height:82px;gap:10px}.topbar-brand{min-width:0;gap:6px}.brand-mark{width:42px;height:46px}.brand-mark:before{inset:0}.brand-shield{width:31px;height:34px;font-size:10px}.brand-copy strong{font-size:16px}.brand-copy span{font-size:9px;padding:5px 7px}.hamburger{display:grid;place-items:center}.icon-btn{background:#202026;border:1px solid #36363c;border-radius:9px;width:34px;height:34px}.search-trigger{min-width:0;width:42px;height:40px;justify-content:center}.search-trigger-left svg{width:19px}.search-trigger kbd{display:none}.header-chip.version,.username{display:none}.header-chip{height:36px}.user-chip{height:36px;padding:2px 4px}.user-dot{display:none}.workspace{display:block;padding-top:8px}.sidebar{position:fixed;top:0;bottom:0;left:0;width:260px;z-index:30;transform:translateX(-105%);transition:transform .2s ease;overflow:auto;background:#131319;box-shadow:0 20px 60px #000a;margin:0}.sidebar.open{transform:translateX(0)}.sidebar-top-decoration{display:none}.sidebar-inner{border:0;border-radius:0;min-height:100vh;padding:24px 12px}.mobile-shade.show{display:block;position:fixed;inset:0;z-index:25;background:#0009}.announcement{margin-bottom:12px}.main-area{width:100%}.chapter-layout{grid-template-columns:minmax(0,1fr)}.toc-panel{position:static}.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{flex-wrap:nowrap}.stat-value{margin-left:auto}}
+@media(max-width:530px){.app-shell{width:calc(100% - 24px)}.topbar{gap:7px}.brand-copy span{font-size:7px;letter-spacing:.5px}.topbar-actions{gap:5px}.header-chip{padding:0 7px;font-size:11px}.header-chip svg{width:14px}.brand-mark{display:none}.welcome{padding:16px}.welcome-icon{display:none}.panel{padding:17px 14px;border-radius:14px}.stat-grid{gap:7px}.stat{padding:11px 8px;gap:5px;flex-wrap:wrap}.stat-caption{font-size:10px;flex:none}.stat-icon svg{width:14px}.stat-value{font-size:23px;margin-left:0}.stat-change{font-size:9px}.activity-row{gap:8px;padding:11px 9px}.activity-row .row-name{font-size:11px}.activity-row .row-desc{display:block;margin-top:3px}.activity-row .row-right{font-size:10px}.bottom-grid{grid-template-columns:1fr;gap:12px}.guide-cards{grid-template-columns:1fr}.site-footer{display:block;line-height:2}.chapter-head{align-items:flex-start}.chapter-icon{width:38px;height:38px}.chapter-name{font-size:19px}.announcement{gap:5px}.announce-label{font-size:10px}.announce-msg{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+
+/* --- Personalisierbares GTF-Design --- */
+:root{--accent-faint:color-mix(in srgb,var(--orange) 18%,transparent);--accent-line:color-mix(in srgb,var(--orange) 44%,#303038);--accent-strong:color-mix(in srgb,var(--orange) 38%,#17171c)}
+.nav-item.active{background:var(--accent-faint)}
+.nav-item:hover{color:var(--fg)}
+.status-dot{box-shadow:0 0 10px var(--accent-faint)}
+.brand-copy span{color:var(--orange)}
+.brand-mark{background:radial-gradient(circle,var(--accent-faint),transparent 70%)}
+.brand-mark:before{border-color:var(--accent-line)}
+.brand-shield,.user-avatar{background:linear-gradient(130deg,var(--orange),#4c2b35);border-color:var(--orange)}
+.tag:not(.muted-tag):not(.green-tag){background:var(--accent-faint);border-color:var(--accent-line)}
+.chapter-icon,.welcome-icon,.section-index{background:var(--accent-faint);border-color:var(--accent-line)}
+.action-btn.favorited,.save-note{background:var(--accent-faint);border-color:var(--accent-line);color:var(--orange)}
+.action-btn:hover,.activity-row:hover,.guide-card:hover,.quick-link:hover{border-color:var(--accent-line)}
+.section-index{color:var(--orange)}
+::selection{background:var(--orange);color:#15151a}
+.settings-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:14px;flex-wrap:wrap}
+.settings-hero{display:flex;align-items:center;gap:16px}
+.settings-hero-icon{flex:none;display:grid;place-items:center;width:59px;height:59px;border:1px solid var(--accent-line);border-radius:16px;background:var(--accent-faint);color:var(--orange)}
+.settings-hero-icon svg{width:27px;height:27px}
+.settings-heading .eyebrow{font-size:10px;margin-bottom:5px}
+.appearance-panel{margin-top:14px}
+.appearance-options{display:grid;gap:12px}
+.three-options{grid-template-columns:repeat(3,minmax(0,1fr))}
+.theme-option,.background-option{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0;background:var(--panel2);border:2px solid var(--line);border-radius:13px;padding:11px;text-align:left;transition:border-color .18s ease,transform .18s ease}
+.theme-option:hover,.background-option:hover{border-color:var(--accent-line);transform:translateY(-2px)}
+.theme-option.is-selected,.background-option.is-selected{border-color:var(--orange);background:color-mix(in srgb,var(--orange) 7%,var(--panel2))}
+.theme-option strong,.background-option strong{font-size:12px;margin-top:5px}
+.theme-option small{font-size:10px;color:var(--muted)}
+.choice-check{position:absolute;right:12px;bottom:11px;color:var(--orange);display:none}
+.choice-check svg{width:16px;height:16px}
+.is-selected>.choice-check{display:block}
+.choice-preview{display:flex;overflow:hidden;height:76px;width:100%;border-radius:8px;border:1px solid #4b4b52;background:#15151b;position:relative}
+.preview-side{width:24%;background:#222228;border-right:1px solid #38383c}
+.preview-lines{display:flex;flex-direction:column;gap:7px;padding:11px 10px;flex:1}
+.preview-lines i{height:10px;background:#34343b;border-radius:4px;width:100%}
+.preview-lines i:first-child{width:58%}
+.preview-lines i:last-child{width:85%}
+.preview-accent{position:absolute;left:5px;top:16px;height:13px;width:14%;border-radius:3px;background:var(--orange)}
+.choice-theme-midnight{background:#101b32;border-color:#394d72}.choice-theme-midnight .preview-side{background:#0d162a;border-color:#273653}.choice-theme-midnight .preview-lines i{background:#243451}
+.choice-theme-light{background:#f7f7fa;border-color:#b6b7c3}.choice-theme-light .preview-side{background:#e7e8f0;border-color:#d5d7e3}.choice-theme-light .preview-lines i{background:#d7d9e3}
+.background-options{grid-template-columns:repeat(5,minmax(0,1fr))}
+.background-option{align-items:center;text-align:center;gap:5px;padding:8px}
+.background-option strong{margin:6px 0;font-size:11px}
+.background-option .choice-check{top:11px;right:11px;bottom:auto;background:#15151c;border-radius:50%;height:18px;width:18px}
+.background-thumb{display:grid;place-items:center;width:100%;height:88px;border-radius:9px;color:#fff;font-size:27px;overflow:hidden}
+.background-stars{background:radial-gradient(1px 1px at 15% 23%,#fff 95%,transparent),radial-gradient(2px 2px at 70% 71%,#bbcaff 95%,transparent),radial-gradient(1px 1px at 80% 20%,#fff 95%,transparent),linear-gradient(135deg,#161018,#090c22)}
+.background-aurora{background:radial-gradient(ellipse at 70% 10%,#236d96aa,transparent 60%),radial-gradient(ellipse at 22% 83%,#246c53,transparent 65%),#090f25}
+.background-grid{background-image:linear-gradient(#5871a729 1px,transparent 1px),linear-gradient(90deg,#5871a729 1px,transparent 1px),linear-gradient(120deg,#111e37,#090b17);background-size:21px 21px,21px 21px,auto}
+.background-nebula{background:radial-gradient(ellipse at 25% 35%,#a63e9f9c,transparent 65%),radial-gradient(ellipse at 75% 75%,#3062b5af,transparent 70%),#090b19}
+.background-plain{background:#13151b}
+.color-value{font-size:11px;font-weight:900;letter-spacing:.8px;border:1px solid var(--line);background:var(--panel2);border-radius:9px;padding:9px 12px;color:var(--fg)}
+.accent-picker-grid{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}
+.accent-presets{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.accent-swatch{width:36px;height:36px;display:grid;place-items:center;background:var(--swatch);border:3px solid transparent;border-radius:50%;box-shadow:0 0 0 2px transparent;transition:transform .16s ease}
+.accent-swatch:hover{transform:scale(1.12)}
+.accent-swatch.is-selected{box-shadow:0 0 0 2px var(--fg);border-color:var(--panel)}
+.accent-swatch svg{display:none;width:18px;height:18px;filter:drop-shadow(0 1px 2px #0009);color:#fff}
+.accent-swatch.is-selected svg{display:block}
+.custom-color{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:7px 9px 7px 13px;background:var(--panel2);cursor:pointer;font-size:11px;font-weight:800}
+.custom-color span{display:flex;align-items:center;gap:8px}.custom-color span svg{color:var(--orange);width:16px}
+.custom-color input{appearance:none;-webkit-appearance:none;cursor:pointer;width:36px;height:32px;background:none;border:0;padding:0}
+.custom-color input::-webkit-color-swatch-wrapper{padding:0}.custom-color input::-webkit-color-swatch{border-radius:7px;border:2px solid var(--line)}
+.segmented{display:flex;align-items:center;border:1px solid var(--line);padding:4px;border-radius:11px;background:var(--panel2);gap:2px;flex-shrink:0}
+.segmented button{background:none;border:1px solid transparent;border-radius:8px;font-size:11px;font-weight:800;padding:9px 13px;color:var(--muted)}
+.segmented button.is-selected{background:var(--accent-faint);color:var(--orange);border-color:var(--accent-line)}
+.toggle-switch{display:inline-flex;align-items:center;cursor:pointer;position:relative;flex-shrink:0}
+.toggle-switch input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer}
+.switch-track{width:47px;height:26px;border-radius:22px;background:#55555d;border:1px solid #74747a;position:relative;transition:background .2s}
+.switch-track:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;top:3px;left:3px;background:white;transition:transform .2s}
+.toggle-switch input:checked+.switch-track{background:var(--orange);border-color:var(--orange)}
+.toggle-switch input:checked+.switch-track:after{transform:translateX(21px)}
+.toggle-switch input:focus-visible+.switch-track{outline:2px solid var(--orange);outline-offset:3px}
+/* Hintergrundwahl: jeweils ein eigenständiger, bildfreier CSS-Hintergrund */
+body[data-background="plain"] .sky{background:var(--bg)}
+body[data-background="plain"] .sky:before,body[data-background="plain"] .sky:after{display:none}
+body[data-background="grid"] .sky{background:radial-gradient(ellipse at 90% 10%,#172c4b55,transparent 62%),var(--bg)}
+body[data-background="grid"] .sky:before{display:block;background-image:linear-gradient(#6486bb24 1px,transparent 1px),linear-gradient(90deg,#6486bb24 1px,transparent 1px);background-size:44px 44px;opacity:.7}
+body[data-background="grid"] .sky:after{display:none}
+body[data-background="aurora"] .sky{background:radial-gradient(ellipse at 50% 0%,#188d8852,transparent 55%),radial-gradient(ellipse at 100% 66%,#3556a74d,transparent 56%),radial-gradient(ellipse at 0% 95%,#28685555,transparent 55%),var(--bg)}
+body[data-background="aurora"] .sky:before{opacity:.17}body[data-background="aurora"] .sky:after{opacity:.12}
+body[data-background="nebula"] .sky{background:radial-gradient(ellipse at 8% 15%,#7b2a7766,transparent 49%),radial-gradient(ellipse at 95% 80%,#3457a66b,transparent 56%),radial-gradient(ellipse at 53% 110%,#8a405258,transparent 45%),var(--bg)}
+body[data-background="nebula"] .sky:before{opacity:.44}
+/* Midnight – leichte Blautöne statt Grau */
+body[data-theme="midnight"]{--bg:#080f21;--panel:#111c31;--panel2:#1a2940;--panel3:#22344d;--line:#34445d;--line-soft:#283a55;--fg:#f1f5ff;--muted:#a8b5ca;color-scheme:dark}
+body[data-theme="midnight"] .panel,body[data-theme="midnight"] .sidebar-inner{background:rgba(17,28,49,.94);border-color:#33435c}
+body[data-theme="midnight"] .announcement,body[data-theme="midnight"] .search-trigger,body[data-theme="midnight"] .header-chip,body[data-theme="midnight"] .user-chip,body[data-theme="midnight"] .search-modal{background:#15223a;border-color:#34435a}
+body[data-theme="midnight"] .activity-row,body[data-theme="midnight"] .stat,body[data-theme="midnight"] .guide-card,body[data-theme="midnight"] .notes-box textarea,body[data-theme="midnight"] .quick-link{background:#1d2b42;border-color:#30405a}
+body[data-theme="midnight"] .nav-item:hover,body[data-theme="midnight"] .toc-link:hover{background:#253651}
+body[data-theme="midnight"] .sidebar{background:#0f1a2f}
+/* Light – vollständige helle Oberfläche mit dunkler Schrift */
+body[data-theme="light"]{--bg:#f0f1f6;--panel:#ffffff;--panel2:#f2f3f8;--panel3:#e5e7f0;--line:#dfe1ea;--line-soft:#e7e8ee;--fg:#171b2a;--muted:#687184;--green:#318e5c;color-scheme:light}
+body[data-theme="light"] .sky{filter:brightness(1.2);opacity:.13}
+body[data-theme="light"] .panel,body[data-theme="light"] .sidebar-inner{background:rgba(255,255,255,.97);border-color:#e0e2ea;box-shadow:0 10px 35px #3333440b}
+body[data-theme="light"] .announcement,body[data-theme="light"] .search-trigger,body[data-theme="light"] .header-chip,body[data-theme="light"] .user-chip,body[data-theme="light"] .search-modal{background:#fff;border-color:#e0e2e9;color:var(--fg)}
+body[data-theme="light"] .brand-copy span{background:#fff;border-color:#e2e3eb}
+body[data-theme="light"] .activity-row,body[data-theme="light"] .stat,body[data-theme="light"] .guide-card,body[data-theme="light"] .notes-box textarea,body[data-theme="light"] .quick-link{background:#f4f5fa;border-color:#e5e6ee;color:#283043}
+body[data-theme="light"] .activity-row .row-desc,body[data-theme="light"] .chapter-desc,body[data-theme="light"] .panel-subtitle,body[data-theme="light"] .empty-note,body[data-theme="light"] .setting-row p,body[data-theme="light"] .guide-card p,body[data-theme="light"] .welcome p,body[data-theme="light"] .rule-list{color:#5e6575}
+body[data-theme="light"] .nav-item{color:#4b5365}body[data-theme="light"] .nav-item svg{color:#798193}body[data-theme="light"] .nav-item.active,body[data-theme="light"] .nav-item.active svg{color:var(--orange)}
+body[data-theme="light"] .nav-item:hover,body[data-theme="light"] .toc-link:hover{color:#181b26;background:#eff0f5}
+body[data-theme="light"] .sidebar-info,body[data-theme="light"] .sidebar-info small,body[data-theme="light"] .site-footer,body[data-theme="light"] .breadcrumb,body[data-theme="light"] .row-right{color:#697181}
+body[data-theme="light"] .nav-label{color:#7b8391}
+body[data-theme="light"] .breadcrumb strong{color:#343849}
+body[data-theme="light"] .section-block,body[data-theme="light"] .setting-row,body[data-theme="light"] .notes-box{border-color:#e1e3ec}
+body[data-theme="light"] .tag.muted-tag,body[data-theme="light"] .small-chip,body[data-theme="light"] .action-btn,body[data-theme="light"] .segmented,body[data-theme="light"] .custom-color,body[data-theme="light"] .color-value{background:#f4f5f9;border-color:#dde0ea;color:#444d60}
+body[data-theme="light"] .stat-change.gray{background:#e5e7ed;color:#576072}
+body[data-theme="light"] .chapter-icon,body[data-theme="light"] .welcome-icon{background:var(--accent-faint)}
+body[data-theme="light"] .toc-link{color:#4c5467}
+body[data-theme="light"] .modal-searchline input{color:#161b27}
+body[data-theme="light"] .search-result{color:#222a38}body[data-theme="light"] .search-result:hover,body[data-theme="light"] .search-result.selected{background:#f0f0f5}
+body[data-theme="light"] .search-result small,body[data-theme="light"] .search-hint{color:#6a7181}
+body[data-theme="light"] .nav-divider,body[data-theme="light"] .sidebar-footer{border-color:#e7e9ef}
+body[data-theme="light"] .user-chip .username{color:#272b39}
+body[data-theme="light"] .search-trigger kbd{background:#e9eaf0;color:#393d46}
+body[data-theme="light"] .content-note{background:#fff9ee;color:#6c5747;border-color:#eddabc}
+body[data-theme="light"] .content-note strong{color:#a55d12}
+body[data-theme="light"] .stat-change.ochre{background:#fff3e5;color:#94560e}
+body[data-theme="light"] .stat-change{background:#e1f5e9;color:#237a49}
+body[data-theme="light"] .sidebar{background:#fff}
+body[data-theme="light"] .settings-hero-icon{background:var(--accent-faint)}
+body[data-theme="light"] .accent-swatch.is-selected{border-color:#fff}
+body[data-theme="light"] .tag:not(.muted-tag):not(.green-tag){color:var(--orange)}
+/* Zusätzliche Designoptionen */
+body[data-corners="square"] .panel,body[data-corners="square"] .sidebar-inner,body[data-corners="square"] .announcement{border-radius:6px}
+body[data-corners="square"] .nav-item,body[data-corners="square"] .activity-row,body[data-corners="square"] .stat,body[data-corners="square"] .guide-card,body[data-corners="square"] .action-btn,body[data-corners="square"] .theme-option{border-radius:5px}
+body[data-density="compact"] .panel{padding:15px 17px}
+body[data-density="compact"] .nav-item{min-height:37px;padding:9px 12px}
+body[data-density="compact"] .activity-row{min-height:35px;padding:7px 12px}
+body[data-density="compact"] .stat{padding:9px 10px}
+body[data-density="compact"] .section-block{padding:11px 0}
+body[data-motion="off"] *,body[data-motion="off"] *:before,body[data-motion="off"] *:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+@media(max-width:700px){.three-options{gap:8px}.theme-option{padding:7px}.choice-preview{height:58px}.theme-option strong{font-size:11px}.theme-option small{font-size:9px}.background-options{grid-template-columns:repeat(3,minmax(0,1fr))}.background-thumb{height:68px}.settings-heading .tag{margin-left:0}}
+@media(max-width:480px){.settings-hero-icon{width:44px;height:44px}.settings-hero{gap:10px}.three-options{grid-template-columns:repeat(3,minmax(0,1fr))}.theme-option{padding:5px}.theme-option .choice-check{bottom:4px;right:4px}.theme-option small{min-height:22px}.background-options{grid-template-columns:repeat(2,minmax(0,1fr))}.accent-presets{gap:8px}.setting-row{flex-wrap:wrap;gap:12px}.segmented{max-width:100%}}
+
+</style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="mobile-shade" id="mobileShade"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <button class="hamburger icon-btn" id="menuButton" type="button" aria-label="Menü öffnen" data-icon="menu"></button>
+        <div class="brand-mark" aria-hidden="true"><div class="brand-shield">GTF</div></div>
+        <div class="brand-copy"><strong>Dashboard</strong><span>GANG TASK FORCE · DE 03</span></div>
+      </div>
+      <button class="search-trigger" id="searchTrigger" type="button"><span class="search-trigger-left" data-icon="search"> Handbuch durchsuchen</span><kbd> K </kbd></button>
+      <div class="topbar-actions">
+        <div class="header-chip" title="Handbuchkapitel"><span class="orange" data-icon="book-open"></span><span id="topChapterCount">8</span></div>
+        <div class="header-chip version" title="Vorlagenversion"><span class="orange" data-icon="git-branch"></span><span>1.0</span></div>
+        <div class="user-chip"><span class="user-avatar">G</span><span class="username">GTF DE 03</span><span class="user-dot"></span></div>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar" id="sidebar" aria-label="Hauptnavigation">
+        <div class="sidebar-top-decoration" aria-hidden="true">✦</div>
+        <div class="sidebar-inner">
+          <div class="nav-label">NAVIGATION</div>
+          <nav id="mainNav"></nav>
+          <div class="nav-divider"></div>
+          <div class="nav-label sub-label">INFORMATIONEN</div>
+          <div class="sidebar-info"><span class="status-dot"></span> Handbuch-Vorlage<br><small>Inhalte vor Nutzung prüfen</small></div>
+          <div class="sidebar-footer">GTF · DE 03<br>Version 1.0</div>
+        </div>
+      </aside>
+
+      <main class="main-area" id="mainArea">
+        <div class="announcement"><span class="announce-icon" data-icon="sparkles"></span><span class="announce-label">GTF INTERNES HANDBUCH</span><span class="announce-msg">Alle wichtigen Richtlinien, Abläufe und Informationen <b>an einem Ort.</b></span></div>
+        <div id="pageContent" aria-live="polite"></div>
+        <footer class="site-footer"><span>© GTF DE 03 · Handbuch-Vorlage</span><span>Eigenständiges Design · Beispielinhalte</span></footer>
+      </main>
+    </div>
+  </div>
+
+  <div class="search-backdrop" id="searchBackdrop" hidden>
+    <div class="search-modal" role="dialog" aria-modal="true" aria-labelledby="searchHeading">
+      <div class="modal-searchline"><span data-icon="search" class="orange"></span><input id="globalSearch" type="search" placeholder="Kapitel, Regel oder Begriff suchen ..." aria-label="Handbuch durchsuchen" autocomplete="off" /><button class="esc-button" id="closeSearch" type="button">ESC</button></div>
+      <div class="search-modal-heading" id="searchHeading">KAPITEL & INHALTE</div>
+      <div class="search-results" id="searchResults"></div>
+      <div class="search-hint">Kapitel anklicken, um es zu öffnen <span>↵</span></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+/* GTF DE 03 · Handbuch-Demo – Texte und Kapitel hier anpassen. */
+'use strict';
+const paths={
+ 'layout-dashboard':'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+ 'book-open':'<path d="M12 7v14M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13h-5a4 4 0 0 0-4 3 4 4 0 0 0-4-3H3Z"/>',
+ 'clipboard':'<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V2h6v2.5M9 10h6M9 14h6M9 18h3"/>',
+ 'users':'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M16 3.2a4 4 0 0 1 0 7.6M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>',
+ 'shield':'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',
+ 'radio':'<path d="M5 16.6a10 10 0 0 1 0-9.2M9 13.6a5 5 0 0 1 0-3.2M19 7.4a10 10 0 0 1 0 9.2M15 10.4a5 5 0 0 1 0 3.2"/><circle cx="12" cy="12" r="1.5"/>',
+ 'graduation-cap':'<path d="m2 10 10-5 10 5-10 5-10-5ZM6 12v5c3 3 9 3 12 0v-5M22 10v7"/>',
+ 'file-text':'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',
+ 'contact':'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M6 17a3 3 0 0 1 6 0M15 8h3M15 12h3M15 16h3"/>',
+ 'settings':'<path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21H10v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1-2.8-2.8.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2v-4h1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5V3h4v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9A1.7 1.7 0 0 0 21 10h1v4h-1a1.7 1.7 0 0 0-1.6 1Z"/>',
+ 'search':'<circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/>',
+ 'git-branch':'<circle cx="6" cy="3" r="2"/><circle cx="6" cy="21" r="2"/><circle cx="18" cy="6" r="2"/><path d="M6 5v14M18 8a6 6 0 0 1-6 6H6"/>',
+ 'sparkles':'<path d="m12 3 1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3ZM19 17l.6 1.4L21 19l-1.4.6L19 21l-.6-1.4L17 19l1.4-.6L19 17Z"/>',
+ 'bookmark':'<path d="M6 3h12a1 1 0 0 1 1 1v18l-7-4-7 4V4a1 1 0 0 1 1-1Z"/>',
+ 'chevron-right':'<path d="m9 18 6-6-6-6"/>',
+ 'arrow-up-right':'<path d="M7 17 17 7M7 7h10v10"/>',
+ 'check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+ 'clock':'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ 'menu':'<path d="M4 7h16M4 12h16M4 17h16"/>',
+ 'star':'<path d="m12 2 3.1 6.3 7 1-5.1 5 1.2 7-6.2-3.3-6.2 3.3 1.2-7-5.1-5 7-1L12 2Z"/>',
+ 'layers':'<path d="m12 2 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 17l9 5 9-5"/>',
+ 'info':'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
+ 'trash':'<path d="M4 7h16M10 11v7M14 11v7M6 7l1 14h10l1-14M9 7V4h6v3"/>',
+ 'notes':'<path d="M5 3h14v18H5zM9 8h6M9 12h6M9 16h4"/>',
+ 'calendar':'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',
+ 'arrow-left':'<path d="m12 19-7-7 7-7M5 12h15"/>'
+};
+const icon=(name)=>`<svg viewBox="0 0 24 24" aria-hidden="true">${paths[name]||paths['info']}</svg>`;
+const chapters=[
+ {id:'grundlagen',title:'Grundlagen',subtitle:'Auftrag, Ziele und Zuständigkeiten',icon:'book-open',sections:[
+  {title:'Auftrag der GTF',rules:['Die GTF ist Teil des Rollenspiel-Umfelds DE 03. Aufgaben und Befugnisse richten sich ausschließlich nach den dort gültigen Regelwerken.','Der Umgang mit anderen Personen bleibt sachlich, respektvoll und angemessen.']},
+  {title:'Grundprinzipien',rules:['Handle nachvollziehbar und gemäß den aktuell freigegebenen Vorgaben.','Unklare Situationen werden mit der zuständigen Leitung abgestimmt.','Interne Informationen werden nur mit berechtigten Mitgliedern geteilt.']},
+  {title:'Zuständigkeiten',rules:['Genaue Abteilungsbereiche und Aufgaben müssen von der Leitung ergänzt werden.','Bei Überschneidungen von Verantwortlichkeiten entscheidet die jeweils zuständige Führung.']}]},
+ {id:'dienst',title:'Dienstvorschriften',subtitle:'Dienstverhalten und allgemeine Richtlinien',icon:'clipboard',sections:[
+  {title:'Dienstliches Verhalten',rules:['Respektvoller Umgang, klare Kommunikation und Teamfähigkeit bilden die Grundlage der Zusammenarbeit.','Anweisungen sind im Rahmen der tatsächlich gültigen Server- und Organisationsregeln zu befolgen.']},
+  {title:'Vertraulichkeit',rules:['Interne Daten, Dokumente und Gespräche gehören nicht in öffentliche Kanäle.','Dokumentationen dürfen nur mit den vorgesehenen Berechtigungen weitergegeben werden.']},
+  {title:'Dokumentation',rules:['Wichtige Dienstvorgänge werden zeitnah und nachvollziehbar festgehalten.','Unstimmigkeiten werden frühzeitig an die zuständige Stelle gemeldet.']}]},
+ {id:'raenge',title:'Rangstruktur',subtitle:'Hierarchie, Zuständigkeiten und Beförderungen',icon:'users',sections:[
+  {title:'Dienstgrade',rules:['Die offizielle Rangfolge muss von der GTF-Leitung in diesem Kapitel hinterlegt werden.','Die nachfolgende Gliederung ist nur eine Vorlage: Leitung, Ausbilder und Mitglieder.']},
+  {title:'Weisungsbefugnis',rules:['Die tatsächlichen Weisungsbefugnisse ergeben sich aus den freigegebenen Organisationsregeln.','Änderungen an Zuständigkeiten werden intern kommuniziert.']},
+  {title:'Beförderungen',rules:['Kriterien und Verantwortliche müssen durch die Leitung festgelegt und hier dokumentiert werden.']}]},
+ {id:'einsatz',title:'Einsatzabläufe',subtitle:'Planung, Durchführung und Nachbereitung',icon:'shield',sections:[
+  {title:'Vorbereitung',rules:['Vor Beginn werden Auftrag, Zuständigkeiten und Ansprechpartner geklärt.','Die geltenden Serverregeln und Zuständigkeitsgrenzen werden berücksichtigt.']},
+  {title:'Durchführung',rules:['Die Kommunikation erfolgt klar, kurz und über freigegebene Kanäle.','Bei Änderungen der Lage wird die zuständige Einsatzleitung informiert.']},
+  {title:'Nachbereitung',rules:['Abgeschlossene Vorgänge werden entsprechend den gültigen Vorgaben protokolliert.','Offene Rückfragen werden an die zuständige Stelle weitergegeben.']}]},
+ {id:'funk',title:'Funk & Kommunikation',subtitle:'Funkdisziplin und Meldungen',icon:'radio',sections:[
+  {title:'Grundregeln',rules:['Funksprüche werden kurz, sachlich und verständlich gehalten.','Dringende Meldungen haben Vorrang vor unwichtigen Unterhaltungen.']},
+  {title:'Meldungen',rules:['Nenne wichtige Informationen eindeutig und strukturiert.','Bestätige eingehende Arbeitsaufträge, falls die Abläufe dies verlangen.']},
+  {title:'Kanäle',rules:['Vertrauliche Inhalte werden nur über die dafür vorgesehenen Kanäle geteilt.','Konkrete Funkkanäle und Codes können hier später von der Leitung ergänzt werden.']}]},
+ {id:'ausbildung',title:'Ausbildung',subtitle:'Einweisung, Prüfungen und Weiterbildung',icon:'graduation-cap',sections:[
+  {title:'Einweisung',rules:['Neue Mitglieder erhalten eine strukturierte Einführung in die Aufgaben der Organisation.','Der konkrete Ablauf wird von der Ausbildungsleitung festgelegt.']},
+  {title:'Prüfungen',rules:['Prüfungsthemen, Bestehensgrenzen und Wiederholungsregeln werden durch die Leitung veröffentlicht.','Bewertungen werden nachvollziehbar dokumentiert.']},
+  {title:'Weiterbildung',rules:['Änderungen an den internen Vorgaben werden an betroffene Mitglieder weitergegeben.']}]},
+ {id:'dokumente',title:'Dokumente & Vorlagen',subtitle:'Berichte, Nachweise und Formulare',icon:'file-text',sections:[
+  {title:'Einsatzbericht',rules:['Empfohlene Angaben: Datum, Beteiligte, Vorgang, Verlauf und Ergebnis.','Nur datenschutz- und regelkonforme Informationen eintragen.']},
+  {title:'Ausbildungsnachweis',rules:['Empfohlene Angaben: Thema, Teilnehmer, Ausbilder, Datum und Ergebnis.']},
+  {title:'Vorlagenpflege',rules:['Offizielle Formulare, Links und Downloads müssen hier durch die zuständige Leitung ergänzt werden.']}]},
+ {id:'kontakte',title:'Ansprechpartner',subtitle:'Leitung und zuständige Stellen',icon:'contact',sections:[
+  {title:'Abteilungsleitung',rules:['Name und offizieller Kontakt: bitte ergänzen.']},
+  {title:'Ausbildungsleitung',rules:['Name und offizieller Kontakt: bitte ergänzen.']},
+  {title:'Support & Meldungen',rules:['Offizieller interner Meldeweg: bitte ergänzen.']}]}
+];
+const navItems=[{id:'start',title:'Übersicht',icon:'layout-dashboard'},{id:'leitfaden',title:'Leitfaden',icon:'book-open'},...chapters.map(c=>({id:c.id,title:c.title,icon:c.icon})),{id:'einstellungen',title:'Einstellungen',icon:'settings'}];
+const byId=(id)=>document.getElementById(id);
+const pageContent=byId('pageContent');
+const storeKey='gtf-de03-handbuch-v1';
+const defaultAppearance={theme:'dark',background:'stars',accent:'#ff962a',corners:'rounded',density:'comfortable',motion:true};
+const accentPresets=[['Orange','#ff962a'],['Rot','#ff555b'],['Blau','#4b99ff'],['Violett','#a477ff'],['Türkis','#22cbb7'],['Grün','#77d681'],['Pink','#f275ba']];
+const allowedThemes=['dark','midnight','light'],allowedBackgrounds=['stars','aurora','grid','nebula','plain'];
+function validatedAppearance(data){const a={...defaultAppearance};if(data&&typeof data==='object'){
+ if(allowedThemes.includes(data.theme))a.theme=data.theme;
+ if(allowedBackgrounds.includes(data.background))a.background=data.background;
+ if(typeof data.accent==='string'&&/^#[0-9a-fA-F]{6}$/.test(data.accent))a.accent=data.accent.toLowerCase();
+ if(['rounded','square'].includes(data.corners))a.corners=data.corners;
+ if(['comfortable','compact'].includes(data.density))a.density=data.density;
+ if(typeof data.motion==='boolean')a.motion=data.motion;
+ }return a}
+let saved={favorites:[],notes:{},appearance:{...defaultAppearance}};
+try{let local=JSON.parse(localStorage.getItem(storeKey)||'{}');if(Array.isArray(local.favorites))saved.favorites=local.favorites.filter(x=>chapters.some(c=>c.id===x));if(local.notes&&typeof local.notes==='object'&&!Array.isArray(local.notes))saved.notes=local.notes;if(local.appearance)saved.appearance=validatedAppearance(local.appearance);}catch{}
+let current='start',searchSelected=0,searchMatches=[];
+function persist(){try{localStorage.setItem(storeKey,JSON.stringify(saved));return true}catch{notify('Lokales Speichern nicht möglich.');return false}}
+function notify(text){const el=byId('toast');el.textContent=text;el.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>el.classList.remove('show'),2600)}
+function applyAppearance(){const a=saved.appearance;
+ document.body.dataset.theme=a.theme;document.body.dataset.background=a.background;
+ document.body.dataset.corners=a.corners;document.body.dataset.density=a.density;
+ document.body.dataset.motion=a.motion?'on':'off';
+ document.documentElement.style.setProperty('--orange',a.accent);
+ document.documentElement.style.setProperty('--orange2',a.accent);
+ const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=a.theme==='light'?'#f0f1f6':a.theme==='midnight'?'#080f24':'#09090e';
+ updateAppearanceSelections();
+}
+function setAppearance(key,value){const next=validatedAppearance({...saved.appearance,[key]:value});saved.appearance=next;applyAppearance();persist()}
+function updateAppearanceSelections(){const a=saved.appearance;
+ document.querySelectorAll('[data-appearance-option]').forEach(b=>{
+ const selected=a[b.dataset.appearanceOption]===b.dataset.value;
+ b.classList.toggle('is-selected',selected);b.setAttribute('aria-pressed',selected?'true':'false');
+ });
+ document.querySelectorAll('[data-accent-preset]').forEach(b=>{const selected=a.accent===b.dataset.accentPreset.toLowerCase();b.classList.toggle('is-selected',selected);b.setAttribute('aria-pressed',selected?'true':'false')});
+ const color=byId('accentPicker');if(color)color.value=a.accent;
+ const colorText=byId('accentValue');if(colorText)colorText.textContent=a.accent.toUpperCase();
+ const motion=byId('motionSwitch');if(motion)motion.checked=a.motion;
+}
+function renderNav(){byId('mainNav').innerHTML=navItems.map(item=>`<button class="nav-item${item.id===current?' active':''}" data-route="${item.id}" type="button" ${item.id===current?'aria-current="page"':''}>${icon(item.icon)}<span>${item.title}</span>${item.id==='leitfaden'?icon('chevron-right').replace('<svg','<svg class="chevron"'):''}</button>`).join('')}
+function panel(title,ico,content,extras=''){return `<section class="panel"><div class="panel-header"><h2 class="panel-title">${icon(ico)} ${title}</h2>${extras}</div>${content}</section>`}
+function overview(){const favoriteCount=saved.favorites.length,sectionCount=chapters.reduce((n,c)=>n+c.sections.length,0);
+ return `<section class="panel welcome"><div><p class="eyebrow">DEIN INTERNES NACHSCHLAGEWERK</p><h1>Willkommen bei der <span>GTF DE 03</span></h1><p>Hier findest du Leitfäden, interne Vorschriften und wichtige Informationen an einem Ort.</p></div><div class="welcome-icon">${icon('shield')}</div></section>
+ ${panel('Handbuch im Überblick','layout-dashboard',`<div class="stat-grid">
+ <div class="stat"><span class="stat-icon">${icon('book-open')}</span><span class="stat-caption">Kapitel</span><strong class="stat-value">${chapters.length}</strong><span class="stat-change">Aktiv</span></div>
+ <div class="stat"><span class="stat-icon">${icon('clipboard')}</span><span class="stat-caption">Abschnitte</span><strong class="stat-value">${sectionCount}</strong><span class="stat-change gray">Gesamt</span></div>
+ <div class="stat"><span class="stat-icon">${icon('bookmark')}</span><span class="stat-caption">Favoriten</span><strong class="stat-value">${favoriteCount}</strong><span class="stat-change ochre">Lokal</span></div>
+ <div class="stat"><span class="stat-icon">${icon('git-branch')}</span><span class="stat-caption">Version</span><strong class="stat-value">1.0</strong><span class="stat-change gray">Vorlage</span></div>
+ </div>`,`<span class="small-chip">${icon('calendar')} DE 03 · Vorlage</span>`)}
+ ${panel('Kapitel & Schnellzugriff','clock',`<div class="list-rows">${chapters.map((c,i)=>`<button class="activity-row" type="button" data-route="${c.id}"><span class="row-icon">${icon(c.icon)}</span><span class="row-name">${c.title} <span class="row-desc">– ${c.subtitle}</span></span><span class="row-right">${String(i+1).padStart(2,'0')} ${icon('chevron-right')}</span></button>`).join('')}</div>`,`<button class="small-chip" type="button" data-route="leitfaden">Alle ansehen ${icon('chevron-right')}</button>`)}
+ <div class="bottom-grid">${panel('Deine Favoriten','bookmark', favoriteCount?`<div class="list-rows">${saved.favorites.map(id=>{const c=chapters.find(x=>x.id===id);return `<button class="activity-row" data-route="${c.id}" type="button"><span class="row-icon">${icon(c.icon)}</span><span class="row-name">${c.title}</span><span class="row-right">${icon('arrow-up-right')}</span></button>`}).join('')}</div>`:`<p class="empty-note">Du hast noch keine Favoriten gespeichert. Markiere Kapitel mit dem Sternsymbol.</p>`)}${panel('Wichtige Hinweise','info',`<p class="empty-note">Dies ist eine eigenständige Handbuch-Vorlage. Die Texte sind Beispiele und müssen vor der offiziellen Nutzung durch eure GTF-Leitung geprüft und angepasst werden.</p>`)}</div>`;
+}
+function guide(){return `<div class="breadcrumb">GTF ${icon('chevron-right')} <strong>Leitfaden</strong></div><section class="panel"><div class="panel-header"><div><h1 class="chapter-name">Leitfaden</h1><p class="chapter-desc">Wähle ein Kapitel aus, um die Inhalte anzusehen.</p></div><span class="tag">${chapters.length} KAPITEL</span></div><div class="guide-cards">${chapters.map(c=>`<button type="button" class="guide-card" data-route="${c.id}"><div class="guide-card-top">${icon(c.icon)}<span class="open-arrow">↗</span></div><h3>${c.title}</h3><p>${c.subtitle}</p></button>`).join('')}</div></section>${panel('Hinweis zur Vorlage','info','<p class="empty-note">Bezeichnungen und Inhalte lassen sich in <strong>app.js</strong> bearbeiten. Persönliche Notizen und Favoriten werden nur in deinem Browser gespeichert.</p>')}`}
+function chapterPage(c){const favored=saved.favorites.includes(c.id);return `<div class="breadcrumb"><button class="small-link" type="button" data-route="leitfaden">Leitfaden</button>${icon('chevron-right')}<strong>${c.title}</strong></div><section class="panel"><div class="chapter-head"><div style="display:flex;align-items:center;gap:13px"><div class="chapter-icon">${icon(c.icon)}</div><div><h1 class="chapter-name">${c.title}</h1><p class="chapter-desc">${c.subtitle}</p></div></div><button class="action-btn ${favored?'favorited':''}" type="button" data-favorite="${c.id}" aria-label="${favored?'Favorit entfernen':'Zu Favoriten hinzufügen'}">${icon('star')} <span>${favored?'Gemerkt':'Merken'}</span></button></div><div class="chapter-meta"><span class="tag">GTF DE 03</span><span class="tag muted-tag">${c.sections.length} Abschnitte</span><span class="tag muted-tag">Vorlageninhalt</span></div></section>
+ <div class="chapter-layout"><section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('file-text')} Kapitelinhalt</h2><span class="tag muted-tag">Version 1.0</span></div>${c.sections.map((s,i)=>`<div class="section-block" id="section-${i}"><h3 class="section-heading"><span class="section-index">${String(i+1).padStart(2,'0')}</span>${s.title}</h3><ul class="rule-list">${s.rules.map(r=>`<li>${r}</li>`).join('')}</ul></div>`).join('')}<div class="content-note"><strong>Hinweis:</strong> Dies sind Beispielinhalte, keine offiziell bestätigten GTF-DE-03-Dienstvorschriften. Bitte vor Verwendung ersetzen oder freigeben lassen.</div></section>
+ <aside class="panel toc-panel"><h3 class="toc-title">Auf dieser Seite</h3>${c.sections.map((s,i)=>`<button type="button" data-scroll="section-${i}" class="toc-link"><span>${String(i+1).padStart(2,'0')}</span>${s.title}</button>`).join('')}<div class="notes-box"><label for="noteInput">${icon('notes')} Private Notizen</label><textarea id="noteInput" placeholder="Deine Notiz zu diesem Kapitel ..." maxlength="2000"></textarea><button type="button" class="action-btn save-note" data-save-note="${c.id}">${icon('check-circle')} Notiz speichern</button><p class="empty-note" style="font-size:10px;margin-top:9px">Nur auf diesem Gerät gespeichert.</p></div></aside></div>`;
+}
+function settingsPage(){const n=Object.values(saved.notes).filter(x=>typeof x==='string'&&x.trim()).length;const a=saved.appearance;
+const themes=[['dark','Dark','Klassisches Dashboard'],['midnight','Midnight','Tiefes Nachtblau'],['light','Light','Helles Design']];
+const backgrounds=[['stars','Sternenhimmel','✦'],['aurora','Polarlicht','◈'],['grid','Raster','▦'],['nebula','Nebel','✧'],['plain','Schlicht','●']];
+const option=(key,value,title,desc,extra='')=>`<button class="theme-option ${a[key]===value?'is-selected':''} ${extra}" type="button" data-appearance-option="${key}" data-value="${value}" aria-pressed="${a[key]===value}"><span class="choice-preview choice-${key}-${value}"><span class="preview-side"></span><span class="preview-lines"><i></i><i></i><i></i></span><span class="preview-accent"></span></span><strong>${title}</strong>${desc?`<small>${desc}</small>`:''}<span class="choice-check">${icon('check-circle')}</span></button>`;
+return `<div class="breadcrumb">GTF ${icon('chevron-right')} <strong>Einstellungen</strong></div>
+<section class="panel settings-heading"><div class="settings-hero"><span class="settings-hero-icon">${icon('settings')}</span><div><p class="eyebrow">DEIN DASHBOARD · DEIN LOOK</p><h1 class="chapter-name">Design & Einstellungen</h1><p class="chapter-desc">Passe das GTF-Handbuch ganz nach deinem Geschmack an. Alle Änderungen siehst du sofort.</p></div></div><span class="tag muted-tag">${icon('check-circle')} Automatisch gespeichert</span></section>
+<section class="panel appearance-panel"><div class="panel-header"><div><h2 class="panel-title">${icon('layers')} Design-Modus</h2><p class="panel-subtitle">Wähle die Grundstimmung deines Dashboards.</p></div></div><div class="appearance-options three-options">${themes.map(([value,title,desc])=>option('theme',value,title,desc)).join('')}</div></section>
+<section class="panel appearance-panel"><div class="panel-header"><div><h2 class="panel-title">${icon('sparkles')} Hintergrund</h2><p class="panel-subtitle">Vom Sternenhimmel bis zum schlichten Hintergrund.</p></div></div><div class="appearance-options background-options">${backgrounds.map(([value,title,symbol])=>`<button class="background-option ${a.background===value?'is-selected':''}" data-appearance-option="background" data-value="${value}" aria-pressed="${a.background===value}" type="button"><span class="background-thumb background-${value}"><span>${symbol}</span></span><strong>${title}</strong><span class="choice-check">${icon('check-circle')}</span></button>`).join('')}</div></section>
+<section class="panel appearance-panel"><div class="panel-header"><div><h2 class="panel-title">${icon('star')} Akzentfarbe</h2><p class="panel-subtitle">Diese Farbe wird für Buttons, Icons und Markierungen verwendet.</p></div><span class="color-value" id="accentValue">${a.accent.toUpperCase()}</span></div><div class="accent-picker-grid"><div class="accent-presets">${accentPresets.map(([name,hex])=>`<button type="button" class="accent-swatch ${a.accent===hex?'is-selected':''}" data-accent-preset="${hex}" aria-pressed="${a.accent===hex}" aria-label="${name}" title="${name}" style="--swatch:${hex}">${icon('check-circle')}</button>`).join('')}</div><label class="custom-color" for="accentPicker"><span>${icon('settings')} Eigene Farbe</span><input type="color" id="accentPicker" value="${a.accent}" aria-label="Eigene Akzentfarbe wählen"/></label></div></section>
+<section class="panel appearance-panel"><div class="panel-header"><div><h2 class="panel-title">${icon('layout-dashboard')} Weitere Anpassungen</h2><p class="panel-subtitle">Passe das Layout nach deinen Vorlieben an.</p></div></div><div class="setting-row"><div><strong>Ecken & Karten</strong><p>Lieber weich abgerundet oder kantiger?</p></div><div class="segmented">${[['rounded','Rund'],['square','Eckig']].map(([v,l])=>`<button type="button" data-appearance-option="corners" data-value="${v}" aria-pressed="${a.corners===v}" class="${a.corners===v?'is-selected':''}">${l}</button>`).join('')}</div></div><div class="setting-row"><div><strong>Abstände</strong><p>Großzügige oder kompakte Darstellung der Inhalte.</p></div><div class="segmented">${[['comfortable','Normal'],['compact','Kompakt']].map(([v,l])=>`<button type="button" data-appearance-option="density" data-value="${v}" aria-pressed="${a.density===v}" class="${a.density===v?'is-selected':''}">${l}</button>`).join('')}</div></div><div class="setting-row"><div><strong>Animationen</strong><p>Bewegungen und weiche Übergänge aktivieren.</p></div><label class="toggle-switch"><input type="checkbox" id="motionSwitch" ${a.motion?'checked':''} aria-label="Animationen aktivieren"><span class="switch-track"></span></label></div></section>
+<section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('notes')} Meine Daten</h2><button class="action-btn" data-reset-appearance type="button">${icon('arrow-left')} Standarddesign wiederherstellen</button></div><div class="settings-grid"><div class="setting-row"><div><strong>Gespeicherte Favoriten</strong><p>Deine markierten Kapitel auf diesem Gerät.</p></div><span class="tag muted-tag">${saved.favorites.length}</span></div><div class="setting-row"><div><strong>Private Notizen</strong><p>Kapitel mit eigenen lokalen Notizen.</p></div><span class="tag muted-tag">${n}</span></div><div class="setting-row"><div><strong>Lokale Daten zurücksetzen</strong><p>Löscht Favoriten und Notizen, nicht dein Design.</p></div><button class="action-btn outline-danger" type="button" data-reset>${icon('trash')} Daten löschen</button></div></div></section>
+${panel('Gut zu wissen','info','<p class="empty-note">Deine Design-Einstellungen werden automatisch in diesem Browser gespeichert und beim nächsten Besuch geladen. Auf anderen Geräten gelten sie nicht automatisch. Die offiziellen Handbuchtexte müssen weiterhin in <strong>app.js</strong> angepasst werden.</p>')}`;
+}
+function go(id){if(!navItems.some(x=>x.id===id))id='start';current=id;renderNav();pageContent.innerHTML=id==='start'?overview():id==='leitfaden'?guide():id==='einstellungen'?settingsPage():chapterPage(chapters.find(x=>x.id===id));const note=byId('noteInput');if(note)note.value=saved.notes[id]||'';closeSearch();closeMobile();window.scrollTo({top:0,behavior:'instant'});}
+function closeMobile(){byId('sidebar').classList.remove('open');byId('mobileShade').classList.remove('show')}
+function openSearch(){byId('searchBackdrop').hidden=false;byId('globalSearch').value='';searchSelected=0;updateSearch();setTimeout(()=>byId('globalSearch').focus(),0)}
+function closeSearch(){byId('searchBackdrop').hidden=true}
+function updateSearch(){const query=byId('globalSearch').value.trim().toLocaleLowerCase('de');searchMatches=chapters.filter(c=>!query||[c.title,c.subtitle,...c.sections.flatMap(s=>[s.title,...s.rules])].join(' ').toLocaleLowerCase('de').includes(query));searchSelected=0;byId('searchResults').innerHTML=searchMatches.length?searchMatches.map((c,i)=>`<button class="search-result${i===0?' selected':''}" data-route="${c.id}" type="button">${icon(c.icon)}<div><strong>${c.title}</strong><small>${c.subtitle}</small></div>${icon('chevron-right')}</button>`).join(''):'<div class="empty-search">Keine passenden Kapitel gefunden.</div>'}
+function updateSelected(){byId('searchResults').querySelectorAll('.search-result').forEach((el,i)=>el.classList.toggle('selected',i===searchSelected))}
+document.addEventListener('click',e=>{const route=e.target.closest('[data-route]');if(route){go(route.dataset.route);return}const fav=e.target.closest('[data-favorite]');if(fav){const id=fav.dataset.favorite;if(saved.favorites.includes(id))saved.favorites=saved.favorites.filter(x=>x!==id);else saved.favorites.push(id);persist();go(id);notify(saved.favorites.includes(id)?'Zu Favoriten hinzugefügt.':'Favorit entfernt.');return}const save=e.target.closest('[data-save-note]');if(save){saved.notes[save.dataset.saveNote]=byId('noteInput').value; if(persist())notify('Notiz wurde auf diesem Gerät gespeichert.');return}const scroll=e.target.closest('[data-scroll]');if(scroll){byId(scroll.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'});return}const option=e.target.closest('[data-appearance-option]');if(option){setAppearance(option.dataset.appearanceOption,option.dataset.value);return}
+const preset=e.target.closest('[data-accent-preset]');if(preset){setAppearance('accent',preset.dataset.accentPreset);return}
+if(e.target.closest('[data-reset-appearance]')){saved.appearance={...defaultAppearance};applyAppearance();persist();go('einstellungen');notify('Standarddesign wiederhergestellt.');return}
+if(e.target.closest('[data-reset]')){if(confirm('Alle lokalen Notizen und Favoriten wirklich löschen?')){saved.favorites=[];saved.notes={};persist();go('einstellungen');notify('Lokale Daten zurückgesetzt.')}return}});
+document.addEventListener('input',e=>{if(e.target.id==='accentPicker'){setAppearance('accent',e.target.value)}});
+document.addEventListener('change',e=>{if(e.target.id==='motionSwitch'){setAppearance('motion',e.target.checked)}});
+byId('searchTrigger').addEventListener('click',openSearch);
+byId('closeSearch').addEventListener('click',closeSearch);
+byId('globalSearch').addEventListener('input',updateSearch);
+byId('globalSearch').addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();searchSelected=Math.min(searchSelected+1,searchMatches.length-1);updateSelected()}if(e.key==='ArrowUp'){e.preventDefault();searchSelected=Math.max(0,searchSelected-1);updateSelected()}if(e.key==='Enter'&&searchMatches.length){go(searchMatches[searchSelected].id)}});
+byId('searchBackdrop').addEventListener('click',e=>{if(e.target===byId('searchBackdrop'))closeSearch()});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch()}if(e.key==='Escape'){closeSearch();closeMobile()}});
+byId('menuButton').addEventListener('click',()=>{byId('sidebar').classList.toggle('open');byId('mobileShade').classList.toggle('show')});
+byId('mobileShade').addEventListener('click',closeMobile);
+byId('topChapterCount').textContent=chapters.length;
+document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon)+(el.dataset.icon==='search'?' Handbuch durchsuchen':''));
+applyAppearance();
+go('start');
+
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 # Berechtigungen laufen ueber GitHub, kein Passwort im HTML.
 media:
   input: media
-  output: /GTF-Handbuch/media
+  output: /media
   rename: safe
   categories: [image]
 

@@ -83,39 +83,6 @@
       ]
     },
     {
-      "id": "raenge",
-      "title": "Rangstruktur",
-      "subtitle": "Hierarchie, Zuständigkeiten und Beförderungen",
-      "icon": "users",
-      "sections": [
-        {
-          "title": "Dienstgrade",
-          "rules": [
-            "🧠 Berater",
-            "👑 Leitung",
-            "🥈 Vize Leitung",
-            "👮 Senior GTF Agent",
-            "👮 GTF Agent",
-            "👮 2. Abteilung",
-            "👤  Aushilfe"
-          ]
-        },
-        {
-          "title": "Weisungsbefugnis",
-          "rules": [
-            "Die tatsächlichen Weisungsbefugnisse ergeben sich aus den freigegebenen Organisationsregeln.",
-            "Änderungen an Zuständigkeiten werden intern kommuniziert."
-          ]
-        },
-        {
-          "title": "Beförderungen",
-          "rules": [
-            "Aktivität ist Wichtig.\nAuf Beförderung kommt die Leitung auf Sie zu."
-          ]
-        }
-      ]
-    },
-    {
       "id": "einsatz",
       "title": "Einsatzabläufe",
       "subtitle": "Planung, Durchführung",
@@ -154,7 +121,7 @@
           "title": "Prüfungen",
           "rules": [
             "Prüfungsthemen: Beweissicherung,Zivistreife,",
-            "Wiederholungsregeln: 1-3 Mal Nicht Bestehen 3 Tage Speere bei 3 Mal 14 Tage Speere"
+            "Wiederholungsregeln: 1-3Mal Nicht Bestehen Gibt eine 3Tage Speere ab dem 3Mal gibt es eine 14 Tage Speere"
           ]
         },
         {
@@ -212,6 +179,24 @@
             "Offizieller interner Meldeweg: Melde dich bei einen Der Leiter."
           ]
         }
+      ]
+    },
+    {
+      "id": "gtf-regeln",
+      "title": "GTF-Regeln",
+      "subtitle": "GTF-Regeln",
+      "icon": "clipboard",
+      "sections": [
+        {
+          "title": "GTF-Regeln",
+          "rules": [
+            "Keine Privatf"
+          ],
+          "images": [
+            {}
+          ]
+        },
+        {}
       ]
     }
   ]

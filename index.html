@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#09090e" />
-  <meta name="description" content="GTF DE 03 – digitales Handbuch und interne Wissensübersicht." />
+  <meta name="description" content="GTF DE 03 – digitales Handbuch, verwaltet über GitHub und Pages CMS." />
   <title>GTF DE 03 • Handbuch</title>
   <style>
 :root{color-scheme:dark;--bg:#080910;--panel:#17171c;--panel2:#202024;--panel3:#26262b;--line:#323238;--line-soft:#27272d;--fg:#f5f4f3;--muted:#99999c;--orange:#ff962a;--orange2:#ffad51;--green:#6ed99f;--radius:17px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
@@ -182,6 +182,27 @@ body[data-motion="off"] *,body[data-motion="off"] *:before,body[data-motion="off
 .editor-disclaimer strong{color:var(--fg)}
 @media(max-width:700px){.editor-chapter-list{grid-template-columns:1fr}.editor-two-col{grid-template-columns:1fr}.chapter-actions{justify-content:flex-start}}
 
+/* Eigene Bilder im Handbuch und im Inhaltseditor */
+.image-editor-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:10px 0;font-size:12px}
+.image-editor-head strong{display:flex;align-items:center;gap:7px}.image-editor-head svg{width:15px;height:15px;color:var(--orange)}
+.image-editor-head small,.image-upload-hint{color:var(--muted);font-size:11px;line-height:1.6}
+.editor-images{display:grid;gap:11px;margin:6px 0 12px}
+.editor-image-item{display:flex;align-items:center;gap:13px;min-width:0;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.editor-image-item>img{width:140px;height:96px;object-fit:cover;border-radius:9px;background:var(--panel2);flex-shrink:0}
+.editor-image-detail{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;flex:1}
+.editor-image-detail .editor-label{width:100%;margin:0}.editor-image-detail .editor-label input{padding:8px 10px}
+.image-upload{display:flex;justify-content:center;align-items:center;gap:10px;padding:17px 14px;border:1px dashed var(--orange);border-radius:12px;cursor:pointer;background:var(--accent-faint);color:var(--orange);font-weight:800;font-size:12px}
+.image-upload svg{width:20px;height:20px}.image-upload:hover{filter:brightness(1.18)}
+.image-upload input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.image-upload:focus-within{outline:2px solid var(--orange);outline-offset:2px}
+.image-upload-hint{margin:9px 0 17px}
+.chapter-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin-top:18px}
+.chapter-figure{margin:0;border:1px solid var(--line);background:var(--panel2);border-radius:12px;overflow:hidden}
+.chapter-figure img{width:100%;height:200px;display:block;object-fit:contain;background:rgba(0,0,0,.15)}
+.chapter-figure figcaption{font-size:11px;color:var(--muted);padding:10px 13px;line-height:1.5;overflow-wrap:anywhere}
+.chapter-figure figcaption:empty{display:none}
+@media(max-width:580px){.editor-image-item{flex-direction:column;align-items:stretch}.editor-image-item>img{width:100%;height:160px}.chapter-gallery{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -218,7 +239,7 @@ body[data-motion="off"] *,body[data-motion="off"] *:before,body[data-motion="off
       <main class="main-area" id="mainArea">
         <div class="announcement"><span class="announce-icon" data-icon="sparkles"></span><span class="announce-label">GTF INTERNES HANDBUCH</span><span class="announce-msg">Alle wichtigen Richtlinien, Abläufe und Informationen <b>an einem Ort.</b></span></div>
         <div id="pageContent" aria-live="polite"></div>
-        <footer class="site-footer"><span>© GTF DE 03 · Handbuch-Vorlage</span><span>Inhalte bearbeitbar · lokal gespeichert</span></footer>
+        <footer class="site-footer"><span>© GTF DE 03 · Handbuch-Vorlage</span><span>Inhalte zentral über GitHub gepflegt</span></footer>
       </main>
     </div>
   </div>
@@ -234,7 +255,7 @@ body[data-motion="off"] *,body[data-motion="off"] *:before,body[data-motion="off
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script id="gtfInitialContent" type="application/json">null</script>
   <script>
-/* GTF DE 03 · Handbuch-Demo – Texte und Kapitel hier anpassen. */
+/* GTF DE 03 – öffentlicher Lesemodus. Inhalte: content/handbook.json */
 'use strict';
 const paths={
  'layout-dashboard':'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
@@ -306,7 +327,7 @@ const defaultChapters=[
 ];
 let chapters=structuredClone(defaultChapters);
 let navItems=[];
-function refreshNavItems(){navItems=[{id:'start',title:'Übersicht',icon:'layout-dashboard'},{id:'leitfaden',title:'Leitfaden',icon:'book-open'},...chapters.map(c=>({id:c.id,title:c.title,icon:c.icon})),{id:'bearbeiten',title:'Inhalte bearbeiten',icon:'edit'},{id:'einstellungen',title:'Einstellungen',icon:'settings'}];byId('topChapterCount').textContent=chapters.length;}
+function refreshNavItems(){navItems=[{id:'start',title:'Übersicht',icon:'layout-dashboard'},{id:'leitfaden',title:'Leitfaden',icon:'book-open'},...chapters.map(c=>({id:c.id,title:c.title,icon:c.icon})),{id:'einstellungen',title:'Einstellungen',icon:'settings'}];byId('topChapterCount').textContent=chapters.length;}
 const byId=(id)=>document.getElementById(id);
 const pageContent=byId('pageContent');
 const storeKey='gtf-de03-handbuch-v2-editable';
@@ -320,16 +341,17 @@ function validateChapters(data){
  if(!x||typeof x!=='object'||!Array.isArray(x.sections)||!x.sections.length||x.sections.length>30)throw Error('Kapitel '+(i+1)+' benötigt 1 bis 30 Abschnitte.');
  const id=cleanText(x.id,60);if(!/^[a-z0-9_-]{1,60}$/.test(id)||used.has(id)||['start','leitfaden','einstellungen','bearbeiten'].includes(id))throw Error('Ungültige oder doppelte Kapitel-ID.');used.add(id);
  const title=cleanText(x.title,100),subtitle=cleanText(x.subtitle,220);if(!title)throw Error('Ein Kapitel hat keinen Titel.');
- const sections=x.sections.map((y,j)=>{if(!y||typeof y!=='object'||!Array.isArray(y.rules)||!y.rules.length||y.rules.length>50)throw Error('Abschnitte müssen 1 bis 50 Regeln haben.');const st=cleanText(y.title,120);const rules=y.rules.map(r=>cleanText(r,1600)).filter(Boolean);if(!st||!rules.length)throw Error('Abschnitt '+(j+1)+' ist unvollständig.');return {title:st,rules};});
+ const sections=x.sections.map((y,j)=>{if(!y||typeof y!=='object'||!Array.isArray(y.rules)||!y.rules.length||y.rules.length>50)throw Error('Abschnitte müssen 1 bis 50 Regeln haben.');const st=cleanText(y.title,120);const rules=y.rules.map(r=>cleanText(r,1600)).filter(Boolean);if(!st||!rules.length)throw Error('Abschnitt '+(j+1)+' ist unvollständig.');
+ const images=(Array.isArray(y.images)?y.images:[]).slice(0,5)
+  .map(img=>({src:String(img?.src||'').trim(),caption:cleanText(img?.caption,150)}))
+  .filter(img=>img.src);
+ if(images.some(img=>!(img.src.startsWith('/GTF-Handbuch/media/')||img.src.startsWith('media/'))
+   || !/\.(png|jpe?g|webp)$/i.test(img.src.split('?')[0])
+   || /[<>\"'`\\]/.test(img.src)||img.src.includes('..')))
+   throw Error('Ungültiger Bildpfad. Bitte Medien über Pages CMS hochladen.');
+ return {title:st,rules,images};});
  return {id,title,subtitle,icon:legalIcons.includes(x.icon)?x.icon:'book-open',sections};
  });}
-function portableContent(){return {format:'gtf-de03-handbuch',version:2,exportiertAm:new Date().toISOString(),chapters:chapters,appearance:saved.appearance};}
-function storeChapters(){saved.chapters=chapters;refreshNavItems();return persist();}
-function downloadText(filename,text,format){const blob=new Blob([text],{type:format});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
-function exportBackup(){downloadText('GTF-DE03-Inhalte.json',JSON.stringify(portableContent(),null,2),'application/json;charset=utf-8');notify('JSON-Sicherung heruntergeladen.');}
-function exportStandalone(){const embedded=byId('gtfInitialContent');if(!embedded){notify('HTML-Export: Bitte die Einzeldatei-Version benutzen.');return;}const previous=embedded.textContent;embedded.textContent=JSON.stringify(portableContent()).replace(/</g,'\\u003c');const html='<!doctype html>\n'+document.documentElement.outerHTML;embedded.textContent=previous;if(document.querySelector('script[src],link[rel="stylesheet"]')){notify('HTML-Export geht nur mit der Einzeldatei.');return;}downloadText('GTF-DE03-Handbuch-BEARBEITET.html',html,'text/html;charset=utf-8');notify('Bearbeitete HTML-Datei heruntergeladen.');}
-function importBackup(file){if(!file)return;file.text().then(t=>{const data=JSON.parse(t);const list=validateChapters(data.chapters);if(!confirm('Import ersetzt alle aktuellen Handbuchkapitel. Fortfahren?'))return;chapters=list;saved.chapters=chapters;saved.favorites=saved.favorites.filter(id=>chapters.some(c=>c.id===id));if(data.appearance)saved.appearance=validatedAppearance(data.appearance);applyAppearance();persist();refreshNavItems();editorId=null;go('bearbeiten');notify('Kapitel erfolgreich importiert.');}).catch(err=>{notify('Import fehlgeschlagen: '+err.message);});}
-let editorId=null;
 const defaultAppearance={theme:'dark',background:'stars',accent:'#ff962a',corners:'rounded',density:'comfortable',motion:true};
 const accentPresets=[['Orange','#ff962a'],['Rot','#ff555b'],['Blau','#4b99ff'],['Violett','#a477ff'],['Türkis','#22cbb7'],['Grün','#77d681'],['Pink','#f275ba']];
 const allowedThemes=['dark','midnight','light'],allowedBackgrounds=['stars','aurora','grid','nebula','plain'];
@@ -343,8 +365,8 @@ function validatedAppearance(data){const a={...defaultAppearance};if(data&&typeo
  }return a}
 let saved={favorites:[],notes:{},appearance:{...defaultAppearance}};
 try{const embedded=byId('gtfInitialContent');const initial=embedded?.textContent?.trim();if(initial&&initial!=='null'){const data=JSON.parse(initial);if(data.chapters)chapters=validateChapters(data.chapters);if(data.appearance)saved.appearance=validatedAppearance(data.appearance);}}catch(err){console.warn('Vorlage konnte nicht geladen werden',err)}
-try{let local=JSON.parse(localStorage.getItem(storeKey)||localStorage.getItem(legacyKey)||'{}');if(local.chapters)chapters=validateChapters(local.chapters);if(Array.isArray(local.favorites))saved.favorites=local.favorites.filter(x=>chapters.some(c=>c.id===x));if(local.notes&&typeof local.notes==='object'&&!Array.isArray(local.notes))saved.notes=local.notes;if(local.appearance)saved.appearance=validatedAppearance(local.appearance);}catch(err){console.warn('Lokaler Inhalt konnte nicht geladen werden',err)}
-saved.chapters=chapters;refreshNavItems();
+try{let local=JSON.parse(localStorage.getItem(storeKey)||localStorage.getItem(legacyKey)||'{}');if(Array.isArray(local.favorites))saved.favorites=local.favorites.filter(x=>chapters.some(c=>c.id===x));if(local.notes&&typeof local.notes==='object'&&!Array.isArray(local.notes))saved.notes=local.notes;if(local.appearance)saved.appearance=validatedAppearance(local.appearance);}catch(err){console.warn('Lokaler Inhalt konnte nicht geladen werden',err)}
+refreshNavItems();
 let current='start',searchSelected=0,searchMatches=[];
 function persist(){try{localStorage.setItem(storeKey,JSON.stringify(saved));return true}catch{notify('Lokales Speichern nicht möglich.');return false}}
 function notify(text){const el=byId('toast');el.textContent=text;el.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>el.classList.remove('show'),2600)}
@@ -379,27 +401,13 @@ function overview(){const favoriteCount=saved.favorites.length,sectionCount=chap
  <div class="stat"><span class="stat-icon">${icon('git-branch')}</span><span class="stat-caption">Version</span><strong class="stat-value">1.0</strong><span class="stat-change gray">Vorlage</span></div>
  </div>`,`<span class="small-chip">${icon('calendar')} DE 03 · Vorlage</span>`)}
  ${panel('Kapitel & Schnellzugriff','clock',`<div class="list-rows">${chapters.map((c,i)=>`<button class="activity-row" type="button" data-route="${c.id}"><span class="row-icon">${icon(c.icon)}</span><span class="row-name">${escapeHTML(c.title)} <span class="row-desc">– ${escapeHTML(c.subtitle)}</span></span><span class="row-right">${String(i+1).padStart(2,'0')} ${icon('chevron-right')}</span></button>`).join('')}</div>`,`<button class="small-chip" type="button" data-route="leitfaden">Alle ansehen ${icon('chevron-right')}</button>`)}
- <div class="bottom-grid">${panel('Deine Favoriten','bookmark', favoriteCount?`<div class="list-rows">${saved.favorites.map(id=>{const c=chapters.find(x=>x.id===id);return `<button class="activity-row" data-route="${c.id}" type="button"><span class="row-icon">${icon(c.icon)}</span><span class="row-name">${escapeHTML(c.title)}</span><span class="row-right">${icon('arrow-up-right')}</span></button>`}).join('')}</div>`:`<p class="empty-note">Du hast noch keine Favoriten gespeichert. Markiere Kapitel mit dem Sternsymbol.</p>`)}${panel('Wichtige Hinweise','info',`<p class="empty-note">Dies ist eine eigenständige Handbuch-Vorlage. Die Texte sind Beispiele und müssen vor der offiziellen Nutzung durch eure GTF-Leitung geprüft und angepasst werden.</p>`)}</div>`;
+ <div class="bottom-grid">${panel('Deine Favoriten','bookmark', favoriteCount?`<div class="list-rows">${saved.favorites.filter(id=>chapters.some(c=>c.id===id)).map(id=>{const c=chapters.find(x=>x.id===id);return `<button class="activity-row" data-route="${c.id}" type="button"><span class="row-icon">${icon(c.icon)}</span><span class="row-name">${escapeHTML(c.title)}</span><span class="row-right">${icon('arrow-up-right')}</span></button>`}).join('')}</div>`:`<p class="empty-note">Du hast noch keine Favoriten gespeichert. Markiere Kapitel mit dem Sternsymbol.</p>`)}${panel('Wichtige Hinweise','info',`<p class="empty-note">Dies ist eine eigenständige Handbuch-Vorlage. Die Texte sind Beispiele und müssen vor der offiziellen Nutzung durch eure GTF-Leitung geprüft und angepasst werden.</p>`)}</div>`;
 }
-function guide(){return `<div class="breadcrumb">GTF ${icon('chevron-right')} <strong>Leitfaden</strong></div><section class="panel"><div class="panel-header"><div><h1 class="chapter-name">Leitfaden</h1><p class="chapter-desc">Wähle ein Kapitel aus, um die Inhalte anzusehen.</p></div><span class="tag">${chapters.length} KAPITEL</span></div><div class="guide-cards">${chapters.map(c=>`<button type="button" class="guide-card" data-route="${c.id}"><div class="guide-card-top">${icon(c.icon)}<span class="open-arrow">↗</span></div><h3>${escapeHTML(c.title)}</h3><p>${escapeHTML(c.subtitle)}</p></button>`).join('')}</div></section>${panel('Hinweis zur Vorlage','info','<p class="empty-note">Mit <strong>Inhalte bearbeiten</strong> kannst du Kapitel direkt in der Webseite ändern und als JSON sichern. Die Änderungen bleiben zunächst nur in deinem Browser.</p>')}`}
-function chapterPage(c){const favored=saved.favorites.includes(c.id);return `<div class="breadcrumb"><button class="small-link" type="button" data-route="leitfaden">Leitfaden</button>${icon('chevron-right')}<strong>${escapeHTML(c.title)}</strong></div><section class="panel"><div class="chapter-head"><div style="display:flex;align-items:center;gap:13px"><div class="chapter-icon">${icon(c.icon)}</div><div><h1 class="chapter-name">${escapeHTML(c.title)}</h1><p class="chapter-desc">${escapeHTML(c.subtitle)}</p></div></div><div class="chapter-actions"><button class="action-btn" type="button" data-edit="${c.id}">${icon('edit')} Bearbeiten</button><button class="action-btn ${favored?'favorited':''}" type="button" data-favorite="${c.id}" aria-label="${favored?'Favorit entfernen':'Zu Favoriten hinzufügen'}">${icon('star')} <span>${favored?'Gemerkt':'Merken'}</span></button></div></div><div class="chapter-meta"><span class="tag">GTF DE 03</span><span class="tag muted-tag">${c.sections.length} Abschnitte</span><span class="tag muted-tag">Vorlageninhalt</span></div></section>
- <div class="chapter-layout"><section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('file-text')} Kapitelinhalt</h2><span class="tag muted-tag">Version 1.0</span></div>${c.sections.map((s,i)=>`<div class="section-block" id="section-${i}"><h3 class="section-heading"><span class="section-index">${String(i+1).padStart(2,'0')}</span>${escapeHTML(s.title)}</h3><ul class="rule-list">${s.rules.map(r=>`<li>${escapeHTML(r)}</li>`).join('')}</ul></div>`).join('')}<div class="content-note"><strong>Hinweis:</strong> Dies sind Beispielinhalte, keine offiziell bestätigten GTF-DE-03-Dienstvorschriften. Bitte vor Verwendung ersetzen oder freigeben lassen.</div></section>
+function guide(){return `<div class="breadcrumb">GTF ${icon('chevron-right')} <strong>Leitfaden</strong></div><section class="panel"><div class="panel-header"><div><h1 class="chapter-name">Leitfaden</h1><p class="chapter-desc">Wähle ein Kapitel aus, um die Inhalte anzusehen.</p></div><span class="tag">${chapters.length} KAPITEL</span></div><div class="guide-cards">${chapters.map(c=>`<button type="button" class="guide-card" data-route="${c.id}"><div class="guide-card-top">${icon(c.icon)}<span class="open-arrow">↗</span></div><h3>${escapeHTML(c.title)}</h3><p>${escapeHTML(c.subtitle)}</p></button>`).join('')}</div></section>${panel('Hinweis zur Vorlage','info','<p class="empty-note">Die Inhalte dieses Handbuchs werden durch berechtigte Personen über GitHub gepflegt und veröffentlicht.</p>')}`}
+function chapterPage(c){const favored=saved.favorites.includes(c.id);return `<div class="breadcrumb"><button class="small-link" type="button" data-route="leitfaden">Leitfaden</button>${icon('chevron-right')}<strong>${escapeHTML(c.title)}</strong></div><section class="panel"><div class="chapter-head"><div style="display:flex;align-items:center;gap:13px"><div class="chapter-icon">${icon(c.icon)}</div><div><h1 class="chapter-name">${escapeHTML(c.title)}</h1><p class="chapter-desc">${escapeHTML(c.subtitle)}</p></div></div><div class="chapter-actions"><button class="action-btn ${favored?'favorited':''}" type="button" data-favorite="${c.id}" aria-label="${favored?'Favorit entfernen':'Zu Favoriten hinzufügen'}">${icon('star')} <span>${favored?'Gemerkt':'Merken'}</span></button></div></div><div class="chapter-meta"><span class="tag">GTF DE 03</span><span class="tag muted-tag">${c.sections.length} Abschnitte</span><span class="tag muted-tag">GTF Handbuch</span></div></section>
+ <div class="chapter-layout"><section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('file-text')} Kapitelinhalt</h2><span class="tag muted-tag">Version 1.0</span></div>${c.sections.map((s,i)=>`<div class="section-block" id="section-${i}"><h3 class="section-heading"><span class="section-index">${String(i+1).padStart(2,'0')}</span>${escapeHTML(s.title)}</h3><ul class="rule-list">${s.rules.map(r=>`<li>${escapeHTML(r)}</li>`).join('')}</ul>${s.images?.length?`<div class="chapter-gallery">${s.images.map(img=>`<figure class="chapter-figure"><img src="${img.src}" alt="${escapeHTML(img.caption||s.title)}" loading="lazy"><figcaption>${escapeHTML(img.caption)}</figcaption></figure>`).join('')}</div>`:''}</div>`).join('')}<div class="content-note"><strong>Hinweis:</strong> Bitte beachtet die von der GTF-Leitung freigegebenen Regeln und Hinweise.</div></section>
  <aside class="panel toc-panel"><h3 class="toc-title">Auf dieser Seite</h3>${c.sections.map((s,i)=>`<button type="button" data-scroll="section-${i}" class="toc-link"><span>${String(i+1).padStart(2,'0')}</span>${escapeHTML(s.title)}</button>`).join('')}<div class="notes-box"><label for="noteInput">${icon('notes')} Private Notizen</label><textarea id="noteInput" placeholder="Deine Notiz zu diesem Kapitel ..." maxlength="2000"></textarea><button type="button" class="action-btn save-note" data-save-note="${c.id}">${icon('check-circle')} Notiz speichern</button><p class="empty-note" style="font-size:10px;margin-top:9px">Nur auf diesem Gerät gespeichert.</p></div></aside></div>`;
 }
-// Einfache Formularbearbeitung: Felder werden erst beim Klick auf "Speichern" übernommen.
-function editorSection(sec={title:'',rules:['']}){return `<div class="editor-section"><div class="editor-section-top"><strong>Abschnitt <span class="editor-section-number"></span></strong><button type="button" class="action-btn outline-danger" data-remove-section>${icon('trash')} Entfernen</button></div><label class="editor-label">Überschrift<input class="editor-section-title" maxlength="120" value="${escapeHTML(sec.title)}" placeholder="z. B. Dienstverhalten" required></label><label class="editor-label">Regeln / Inhalte <small>(jede Zeile wird ein eigener Punkt)</small><textarea class="editor-rules" rows="5" maxlength="25000" placeholder="Eine Regel pro Zeile" required>${escapeHTML(sec.rules.join('\n'))}</textarea></label></div>`}
-function renumberSections(){document.querySelectorAll('.editor-section-number').forEach((n,i)=>n.textContent=i+1)}
-function editorPage(){const active=chapters.find(c=>c.id===editorId);return `<div class="breadcrumb">GTF ${icon('chevron-right')} <strong>Inhalte bearbeiten</strong></div>
-<section class="panel editor-hero"><div class="panel-header"><div><p class="eyebrow">HANDBUCH-VERWALTUNG</p><h1 class="chapter-name">Inhalte selbst bearbeiten</h1><p class="chapter-desc">Erstelle Kapitel, ändere Regeln oder passe Texte an – ganz ohne Programmierung.</p></div><button class="primary-btn" type="button" data-add-chapter>${icon('plus')} Neues Kapitel</button></div><div class="info-banner">${icon('info')} Änderungen werden in diesem Browser gespeichert. Wenn andere die bearbeitete Version sehen sollen, lade die <strong>HTML-Datei mit Änderungen</strong> herunter und veröffentliche diese.</div></section>
-<section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('layers')} Kapitel auswählen</h2><span class="tag muted-tag">${chapters.length} Kapitel</span></div><div class="editor-chapter-list">${chapters.map(c=>`<button type="button" class="editor-chapter ${editorId===c.id?'is-selected':''}" data-edit="${c.id}">${icon(c.icon)}<span><strong>${escapeHTML(c.title)}</strong><small>${escapeHTML(c.subtitle)}</small></span>${icon('edit')}</button>`).join('')}</div></section>
-${active?`<form id="chapterForm" class="panel editor-form"><div class="panel-header"><div><h2 class="panel-title">${icon('edit')} Kapitel bearbeiten</h2><p class="panel-subtitle">Bearbeite alle Felder und klicke anschließend auf „Kapitel speichern“.</p></div><button type="button" data-delete-chapter class="action-btn outline-danger">${icon('trash')} Kapitel löschen</button></div><div class="editor-two-col"><label class="editor-label">Kapitelname<input id="editTitle" maxlength="100" value="${escapeHTML(active.title)}" placeholder="Kapitelname" required></label><label class="editor-label">Symbol<select id="editIcon">${legalIcons.map(ic=>`<option value="${ic}" ${active.icon===ic?'selected':''}>${ic}</option>`).join('')}</select></label></div><label class="editor-label">Kurzbeschreibung<input id="editSubtitle" maxlength="220" value="${escapeHTML(active.subtitle)}" placeholder="Kurze Beschreibung"></label><div class="editor-section-heading"><h3>Abschnitte & Regeln</h3><button type="button" class="action-btn" data-add-section>${icon('plus')} Abschnitt hinzufügen</button></div><div id="editorSections">${active.sections.map(editorSection).join('')}</div><div class="editor-bottom"><button type="button" class="action-btn" data-cancel-editor>Abbrechen</button><button type="submit" class="primary-btn">${icon('save')} Kapitel speichern</button></div></form>`:`<section class="panel"><p class="empty-note">Wähle oben ein Kapitel zum Bearbeiten oder erstelle ein neues Kapitel.</p></section>`}
-<section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('download')} Sichern & weitergeben</h2></div><p class="panel-subtitle">Sichere deine Inhalte als JSON-Backup oder lade eine neue HTML-Datei herunter, in der deine Änderungen schon enthalten sind.</p><div class="editor-downloads"><button type="button" class="primary-btn" data-export-html>${icon('download')} Bearbeitete Webseite (.html)</button><button type="button" class="action-btn" data-export-json>${icon('download')} Sicherung (.json)</button><button type="button" class="action-btn" data-choose-import>${icon('upload')} Sicherung importieren</button><input id="importFile" type="file" accept=".json,application/json" hidden></div><div class="editor-disclaimer"><strong>Wichtig:</strong> Das ist eine lokale Version ohne Benutzeranmeldung oder Server-Datenbank. Änderungen werden auf anderen Geräten nicht automatisch synchronisiert. Zum gemeinsamen Live-Bearbeiten brauchst du später einen Server und eine Zugriffskontrolle.</div><button type="button" data-restore-chapters class="action-btn outline-danger">${icon('trash')} Beispielkapitel wiederherstellen</button></section>`;}
-function saveChapterForm(event){event.preventDefault();const c=chapters.find(x=>x.id===editorId);if(!c)return;const title=cleanText(byId('editTitle').value,100),subtitle=cleanText(byId('editSubtitle').value,220),ic=byId('editIcon').value;
-const sections=[...document.querySelectorAll('#editorSections .editor-section')].map(el=>({title:cleanText(el.querySelector('.editor-section-title').value,120),rules:el.querySelector('.editor-rules').value.split(/\r?\n/).map(x=>cleanText(x,1600)).filter(Boolean)}));
-if(!title||!sections.length||sections.some(x=>!x.title||!x.rules.length)){notify('Bitte Kapitelname, Abschnittstitel und mindestens eine Regel ausfüllen.');return;}
-try{const updated=validateChapters(chapters.map(x=>x.id===c.id?{...c,title,subtitle,icon:ic,sections}:x));chapters=updated;storeChapters();go('bearbeiten');notify('Kapitel gespeichert.');}catch(err){notify('Nicht gespeichert: '+err.message)}}
-function makeNewChapter(){if(chapters.length>=35){notify('Maximal 35 Kapitel möglich.');return;}const id='kapitel-'+Date.now().toString(36);chapters.push({id,title:'Neues Kapitel',subtitle:'Beschreibung ergänzen',icon:'book-open',sections:[{title:'Neuer Abschnitt',rules:['Hier deine erste Regel eintragen.']}]});editorId=id;storeChapters();go('bearbeiten');notify('Neues Kapitel erstellt – du kannst es bearbeiten.');}
-
 function settingsPage(){const n=Object.values(saved.notes).filter(x=>typeof x==='string'&&x.trim()).length;const a=saved.appearance;
 const themes=[['dark','Dark','Klassisches Dashboard'],['midnight','Midnight','Tiefes Nachtblau'],['light','Light','Helles Design']];
 const backgrounds=[['stars','Sternenhimmel','✦'],['aurora','Polarlicht','◈'],['grid','Raster','▦'],['nebula','Nebel','✧'],['plain','Schlicht','●']];
@@ -411,31 +419,57 @@ return `<div class="breadcrumb">GTF ${icon('chevron-right')} <strong>Einstellung
 <section class="panel appearance-panel"><div class="panel-header"><div><h2 class="panel-title">${icon('star')} Akzentfarbe</h2><p class="panel-subtitle">Diese Farbe wird für Buttons, Icons und Markierungen verwendet.</p></div><span class="color-value" id="accentValue">${a.accent.toUpperCase()}</span></div><div class="accent-picker-grid"><div class="accent-presets">${accentPresets.map(([name,hex])=>`<button type="button" class="accent-swatch ${a.accent===hex?'is-selected':''}" data-accent-preset="${hex}" aria-pressed="${a.accent===hex}" aria-label="${name}" title="${name}" style="--swatch:${hex}">${icon('check-circle')}</button>`).join('')}</div><label class="custom-color" for="accentPicker"><span>${icon('settings')} Eigene Farbe</span><input type="color" id="accentPicker" value="${a.accent}" aria-label="Eigene Akzentfarbe wählen"/></label></div></section>
 <section class="panel appearance-panel"><div class="panel-header"><div><h2 class="panel-title">${icon('layout-dashboard')} Weitere Anpassungen</h2><p class="panel-subtitle">Passe das Layout nach deinen Vorlieben an.</p></div></div><div class="setting-row"><div><strong>Ecken & Karten</strong><p>Lieber weich abgerundet oder kantiger?</p></div><div class="segmented">${[['rounded','Rund'],['square','Eckig']].map(([v,l])=>`<button type="button" data-appearance-option="corners" data-value="${v}" aria-pressed="${a.corners===v}" class="${a.corners===v?'is-selected':''}">${l}</button>`).join('')}</div></div><div class="setting-row"><div><strong>Abstände</strong><p>Großzügige oder kompakte Darstellung der Inhalte.</p></div><div class="segmented">${[['comfortable','Normal'],['compact','Kompakt']].map(([v,l])=>`<button type="button" data-appearance-option="density" data-value="${v}" aria-pressed="${a.density===v}" class="${a.density===v?'is-selected':''}">${l}</button>`).join('')}</div></div><div class="setting-row"><div><strong>Animationen</strong><p>Bewegungen und weiche Übergänge aktivieren.</p></div><label class="toggle-switch"><input type="checkbox" id="motionSwitch" ${a.motion?'checked':''} aria-label="Animationen aktivieren"><span class="switch-track"></span></label></div></section>
 <section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('notes')} Meine Daten</h2><button class="action-btn" data-reset-appearance type="button">${icon('arrow-left')} Standarddesign wiederherstellen</button></div><div class="settings-grid"><div class="setting-row"><div><strong>Gespeicherte Favoriten</strong><p>Deine markierten Kapitel auf diesem Gerät.</p></div><span class="tag muted-tag">${saved.favorites.length}</span></div><div class="setting-row"><div><strong>Private Notizen</strong><p>Kapitel mit eigenen lokalen Notizen.</p></div><span class="tag muted-tag">${n}</span></div><div class="setting-row"><div><strong>Lokale Daten zurücksetzen</strong><p>Löscht Favoriten und Notizen, nicht dein Design.</p></div><button class="action-btn outline-danger" type="button" data-reset>${icon('trash')} Daten löschen</button></div></div></section>
-${panel('Gut zu wissen','info','<p class="empty-note">Deine Design-Einstellungen werden automatisch in diesem Browser gespeichert und beim nächsten Besuch geladen. Auf anderen Geräten gelten sie nicht automatisch. Die Kapitel kannst du jetzt auch direkt im Menü <strong>Inhalte bearbeiten</strong> ändern. Für die Weitergabe exportiere eine neue HTML-Datei oder eine JSON-Sicherung.</p>')}`;
+${panel('Gut zu wissen','info','<p class="empty-note">Deine Design-Einstellungen werden automatisch in diesem Browser gespeichert und beim nächsten Besuch geladen. Auf anderen Geräten gelten sie nicht automatisch. Die Handbuch-Inhalte werden zentral über GitHub veröffentlicht. Das Farbschema änderst du nur für deinen Browser.</p>')}`;
 }
-function go(id){if(!navItems.some(x=>x.id===id))id='start';current=id;renderNav();pageContent.innerHTML=id==='start'?overview():id==='leitfaden'?guide():id==='einstellungen'?settingsPage():id==='bearbeiten'?editorPage():chapterPage(chapters.find(x=>x.id===id));if(id==='bearbeiten')renumberSections();const note=byId('noteInput');if(note)note.value=saved.notes[id]||'';closeSearch();closeMobile();window.scrollTo({top:0,behavior:'instant'});}
+function go(id){if(!navItems.some(x=>x.id===id))id='start';current=id;renderNav();pageContent.innerHTML=id==='start'?overview():id==='leitfaden'?guide():id==='einstellungen'?settingsPage():chapterPage(chapters.find(x=>x.id===id));const note=byId('noteInput');if(note)note.value=saved.notes[id]||'';closeSearch();closeMobile();window.scrollTo({top:0,behavior:'instant'});}
 function closeMobile(){byId('sidebar').classList.remove('open');byId('mobileShade').classList.remove('show')}
 function openSearch(){byId('searchBackdrop').hidden=false;byId('globalSearch').value='';searchSelected=0;updateSearch();setTimeout(()=>byId('globalSearch').focus(),0)}
 function closeSearch(){byId('searchBackdrop').hidden=true}
-function updateSearch(){const query=byId('globalSearch').value.trim().toLocaleLowerCase('de');searchMatches=chapters.filter(c=>!query||[c.title,c.subtitle,...c.sections.flatMap(s=>[s.title,...s.rules])].join(' ').toLocaleLowerCase('de').includes(query));searchSelected=0;byId('searchResults').innerHTML=searchMatches.length?searchMatches.map((c,i)=>`<button class="search-result${i===0?' selected':''}" data-route="${c.id}" type="button">${icon(c.icon)}<div><strong>${escapeHTML(c.title)}</strong><small>${escapeHTML(c.subtitle)}</small></div>${icon('chevron-right')}</button>`).join(''):'<div class="empty-search">Keine passenden Kapitel gefunden.</div>'}
+function updateSearch(){const query=byId('globalSearch').value.trim().toLocaleLowerCase('de');searchMatches=chapters.filter(c=>!query||[c.title,c.subtitle,...c.sections.flatMap(s=>[s.title,...s.rules,...(s.images||[]).map(img=>img.caption)])].join(' ').toLocaleLowerCase('de').includes(query));searchSelected=0;byId('searchResults').innerHTML=searchMatches.length?searchMatches.map((c,i)=>`<button class="search-result${i===0?' selected':''}" data-route="${c.id}" type="button">${icon(c.icon)}<div><strong>${escapeHTML(c.title)}</strong><small>${escapeHTML(c.subtitle)}</small></div>${icon('chevron-right')}</button>`).join(''):'<div class="empty-search">Keine passenden Kapitel gefunden.</div>'}
 function updateSelected(){byId('searchResults').querySelectorAll('.search-result').forEach((el,i)=>el.classList.toggle('selected',i===searchSelected))}
 document.addEventListener('click',e=>{
-if(e.target.closest('[data-add-chapter]')){makeNewChapter();return}
-if(e.target.closest('[data-add-section]')){byId('editorSections').insertAdjacentHTML('beforeend',editorSection());renumberSections();return}
-const removeSec=e.target.closest('[data-remove-section]');if(removeSec){if(document.querySelectorAll('.editor-section').length<=1){notify('Ein Kapitel benötigt mindestens einen Abschnitt.');return}removeSec.closest('.editor-section').remove();renumberSections();return}
-if(e.target.closest('[data-cancel-editor]')){editorId=null;go('bearbeiten');return}
-if(e.target.closest('[data-delete-chapter]')){if(chapters.length<2){notify('Mindestens ein Kapitel muss erhalten bleiben.');return}if(confirm('Dieses Kapitel wirklich löschen?')){chapters=chapters.filter(x=>x.id!==editorId);saved.favorites=saved.favorites.filter(x=>x!==editorId);delete saved.notes[editorId];editorId=null;storeChapters();go('bearbeiten');notify('Kapitel gelöscht.');}return}
-if(e.target.closest('[data-export-json]')){exportBackup();return}
-if(e.target.closest('[data-export-html]')){exportStandalone();return}
-if(e.target.closest('[data-choose-import]')){byId('importFile').click();return}
-if(e.target.closest('[data-restore-chapters]')){if(confirm('Alle bearbeiteten Kapitel mit den ursprünglichen Beispielkapiteln überschreiben?')){chapters=structuredClone(defaultChapters);saved.chapters=chapters;saved.favorites=[];editorId=null;storeChapters();go('bearbeiten');notify('Beispielkapitel wiederhergestellt.');}return}
-const route=e.target.closest('[data-route]');if(route){go(route.dataset.route);return}const edit=e.target.closest('[data-edit]');if(edit){editorId=edit.dataset.edit;go('bearbeiten');return}const fav=e.target.closest('[data-favorite]');if(fav){const id=fav.dataset.favorite;if(saved.favorites.includes(id))saved.favorites=saved.favorites.filter(x=>x!==id);else saved.favorites.push(id);persist();go(id);notify(saved.favorites.includes(id)?'Zu Favoriten hinzugefügt.':'Favorit entfernt.');return}const save=e.target.closest('[data-save-note]');if(save){saved.notes[save.dataset.saveNote]=byId('noteInput').value; if(persist())notify('Notiz wurde auf diesem Gerät gespeichert.');return}const scroll=e.target.closest('[data-scroll]');if(scroll){byId(scroll.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'});return}const option=e.target.closest('[data-appearance-option]');if(option){setAppearance(option.dataset.appearanceOption,option.dataset.value);return}
-const preset=e.target.closest('[data-accent-preset]');if(preset){setAppearance('accent',preset.dataset.accentPreset);return}
-if(e.target.closest('[data-reset-appearance]')){saved.appearance={...defaultAppearance};applyAppearance();persist();go('einstellungen');notify('Standarddesign wiederhergestellt.');return}
-if(e.target.closest('[data-reset]')){if(confirm('Alle lokalen Notizen und Favoriten wirklich löschen?')){saved.favorites=[];saved.notes={};persist();go('einstellungen');notify('Lokale Daten zurückgesetzt.')}return}});
-document.addEventListener('input',e=>{if(e.target.id==='accentPicker'){setAppearance('accent',e.target.value)}});
-document.addEventListener('submit',e=>{if(e.target.id==='chapterForm')saveChapterForm(e)});
-document.addEventListener('change',e=>{if(e.target.id==='importFile'){importBackup(e.target.files[0]);e.target.value='';return}if(e.target.id==='motionSwitch'){setAppearance('motion',e.target.checked)}});
+  const route=e.target.closest('[data-route]');
+  if(route){go(route.dataset.route);return}
+  const fav=e.target.closest('[data-favorite]');
+  if(fav){const id=fav.dataset.favorite;
+    if(saved.favorites.includes(id))saved.favorites=saved.favorites.filter(x=>x!==id);
+    else saved.favorites.push(id);
+    persist();go(id);notify(saved.favorites.includes(id)?'Zu Favoriten hinzugefügt.':'Favorit entfernt.');return}
+  const save=e.target.closest('[data-save-note]');
+  if(save){saved.notes[save.dataset.saveNote]=byId('noteInput').value;if(persist())notify('Notiz lokal gespeichert.');return}
+  const scroll=e.target.closest('[data-scroll]');
+  if(scroll){byId(scroll.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'});return}
+  const opt=e.target.closest('[data-appearance-option]');
+  if(opt){setAppearance(opt.dataset.appearanceOption,opt.dataset.value);return}
+  const preset=e.target.closest('[data-accent-preset]');
+  if(preset){setAppearance('accent',preset.dataset.accentPreset);return}
+  if(e.target.closest('[data-reset-appearance]')){
+    saved.appearance={...defaultAppearance};applyAppearance();persist();go('einstellungen');notify('Standarddesign wiederhergestellt.');return}
+  if(e.target.closest('[data-reset]')){
+    if(confirm('Alle lokalen Notizen und Favoriten wirklich löschen?')){
+      saved.favorites=[];saved.notes={};persist();go('einstellungen');notify('Lokale Daten zurückgesetzt.')}
+  }
+});
+document.addEventListener('input',e=>{if(e.target.id==='accentPicker')setAppearance('accent',e.target.value)});
+document.addEventListener('change',e=>{if(e.target.id==='motionSwitch')setAppearance('motion',e.target.checked)});
+
+// Die veröffentlichten Inhalte liegen in GitHub: content/handbook.json.
+// Kein Token und kein Admin-Passwort werden an Website-Besucher ausgeliefert.
+async function loadPublishedHandbook(){
+ try{
+  const res=await fetch('content/handbook.json',{cache:'no-store'});
+  if(!res.ok)throw new Error('HTTP '+res.status);
+  const data=await res.json();
+  chapters=validateChapters(data.chapters);
+  saved.favorites=saved.favorites.filter(id=>chapters.some(c=>c.id===id));
+  refreshNavItems();
+  go('start');
+ }catch(err){
+  console.warn('GTF: Zentrale Inhalte konnten nicht geladen werden.',err);
+  const announce=document.querySelector('.announcement .announce-msg');
+  if(announce)announce.textContent='Hinweis: handbook.json nicht erreichbar – Beispielinhalte sichtbar. Prüfe den Upload auf GitHub Pages.';
+ }
+}
 byId('searchTrigger').addEventListener('click',openSearch);
 byId('closeSearch').addEventListener('click',closeSearch);
 byId('globalSearch').addEventListener('input',updateSearch);
@@ -448,6 +482,7 @@ refreshNavItems();
 document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon)+(el.dataset.icon==='search'?' Handbuch durchsuchen':''));
 applyAppearance();
 go('start');
+loadPublishedHandbook();
 
 </script>
 </body>

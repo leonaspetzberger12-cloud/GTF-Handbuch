@@ -200,7 +200,7 @@
         {
           "title": "Ausbildungsleitung und Vize",
           "rules": [
-            "[A-018] Hakim Dark",
+            "Leader:[A-018] Hakim Dark",
             "Vize:[A-107] Moo Weshlove",
             "Vize:[A-103] Lucaa Black"
           ]

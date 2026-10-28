@@ -1,0 +1,91 @@
+# GTF DE 03 – Seitenverwaltung mit Pages CMS
+# Berechtigungen laufen ueber GitHub, kein Passwort im HTML.
+media:
+  input: media
+  output: /GTF-Handbuch/media
+  rename: safe
+  categories: [image]
+
+content:
+  - name: handbook
+    label: GTF Handbuch bearbeiten
+    type: file
+    path: content/handbook.json
+    format: json
+    operations:
+      delete: false
+      rename: false
+    fields:
+      - name: chapters
+        label: Kapitel und Inhalte
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: id
+            label: Interne Kapitel-ID
+            type: string
+            required: true
+            pattern: "^[a-z0-9_-]{1,60}$"
+            description: "Einmalige ID, bei vorhandenen Kapiteln nicht aendern."
+          - name: title
+            label: Kapitelüberschrift
+            type: string
+            required: true
+          - name: subtitle
+            label: Kurzbeschreibung
+            type: text
+          - name: icon
+            label: Symbol
+            type: select
+            options:
+              values:
+                - {name: book-open, label: Buch}
+                - {name: clipboard, label: Vorschriften}
+                - {name: users, label: Team}
+                - {name: shield, label: Schild}
+                - {name: radio, label: Funk}
+                - {name: graduation-cap, label: Ausbildung}
+                - {name: file-text, label: Dokument}
+                - {name: contact, label: Kontakte}
+                - {name: star, label: Stern}
+                - {name: notes, label: Notizen}
+                - {name: layers, label: Ebenen}
+          - name: sections
+            label: Abschnitte
+            type: object
+            list:
+              min: 1
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - name: title
+                label: Abschnittsüberschrift
+                type: string
+                required: true
+              - name: rules
+                label: Regeln und Texte (je Eintrag ein Absatz)
+                type: text
+                list:
+                  min: 1
+              - name: images
+                label: Bilder im Abschnitt
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{caption}"
+                fields:
+                  - name: src
+                    label: Bild hochladen oder auswählen
+                    type: image
+                    options:
+                      extensions: [jpg, jpeg, png, webp]
+                      rename: safe
+                  - name: caption
+                    label: Bildunterschrift
+                    type: string

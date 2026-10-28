@@ -41,3 +41,19 @@
 .zivil-copy-status+.zivil-help{padding-top:4px}
 @media(max-width:920px){.zivil-columns{grid-template-columns:1fr}.zivil-preview-side{position:static}}
 @media(max-width:520px){.zivil-hero{padding:20px 18px;gap:13px}.zivil-hero-icon{width:52px;height:52px;font-size:26px;border-radius:14px}.zivil-body{padding:16px}.zivil-field-grid{grid-template-columns:1fr;gap:0}.zivil-inline{flex-wrap:wrap}.zivil-inline .zivil-control{flex:1 1 180px}.zivil-inline .zivil-button{flex:1 1 100px}.zivil-bottom-bar{align-items:flex-start;flex-direction:column}.zivil-preview-text{font-size:10px}}
+
+/* Größere Schrift für die Zivilstreifen-Anmeldung, passend zum Handbuch */
+.zivil-field>label{font-size:14px}
+.zivil-control{font-size:15px}
+.zivil-button{font-size:14px}
+.zivil-button-primary{font-size:15px}
+.zivil-help{font-size:13px;line-height:1.6}
+.zivil-person{font-size:13px}
+.zivil-preview-text{font-size:14px;line-height:1.8}
+.zivil-copy-status{font-size:13px}
+@media(max-width:520px){
+  .zivil-control{font-size:14px}
+  .zivil-button{font-size:13px}
+  .zivil-preview-text{font-size:12px;line-height:1.8}
+  .zivil-help{font-size:12px}
+}

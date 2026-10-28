@@ -339,24 +339,45 @@ const cleanText=(value,max=5000)=>String(value??'').trim().slice(0,max);
 const legalIcons=['book-open','clipboard','users','shield','radio','graduation-cap','file-text','contact','star','notes','layers'];
 function validateChapters(data){
  if(!Array.isArray(data)||!data.length||data.length>35)throw Error('Bitte 1 bis 35 Kapitel angeben.');
- const used=new Set();return data.map((x,i)=>{
- if(!x||typeof x!=='object'||!Array.isArray(x.sections)||!x.sections.length||x.sections.length>30)throw Error('Kapitel '+(i+1)+' benötigt 1 bis 30 Abschnitte.');
- const id=cleanText(x.id,60);if(!/^[a-z0-9_-]{1,60}$/.test(id)||used.has(id)||['start','leitfaden','einstellungen','bearbeiten','zivilstreife'].includes(id))throw Error('Ungültige oder doppelte Kapitel-ID.');used.add(id);
- const title=cleanText(x.title,100),subtitle=cleanText(x.subtitle,220);if(!title)throw Error('Ein Kapitel hat keinen Titel.');
- const sections=x.sections.map((y,j)=>{if(!y||typeof y!=='object'||!Array.isArray(y.rules)||!y.rules.length||y.rules.length>50)throw Error('Abschnitte müssen 1 bis 50 Regeln haben.');const st=cleanText(y.title,120);const rules=y.rules.map(r=>cleanText(r,1600)).filter(Boolean);if(!st||!rules.length)throw Error('Abschnitt '+(j+1)+' ist unvollständig.');
- const images=(Array.isArray(y.images)?y.images:[]).slice(0,5)
-  .map(img=>({src:String(img?.src||'').trim(),caption:cleanText(img?.caption,150)}))
-  .filter(img=>img.src);
- if(images.some(img=>!(img.src.startsWith('/GTF-Handbuch/media/')||img.src.startsWith('/media/')||img.src.startsWith('media/'))
-   || !/\.(png|jpe?g|webp)$/i.test(img.src.split('?')[0])
-   || /[<>\"'`\\]/.test(img.src)||img.src.includes('..')))
-   throw Error('Ungültiger Bildpfad. Bitte Medien über Pages CMS hochladen.');
- // Alle genehmigten Medienpfade in relative Pfade umwandeln, damit sie auf
- // GitHub Pages (/GTF-Handbuch/) UND auf Cloudflare Pages (/) funktionieren.
- images.forEach(img=>{img.src=img.src.replace(/^\/(?:GTF-Handbuch\/)?media\//,'media/');});
- return {title:st,rules,images};});
- return {id,title,subtitle,icon:legalIcons.includes(x.icon)?x.icon:'book-open',sections};
- });}
+ const used=new Set();
+ return data.map((x,i)=>{
+  if(!x||typeof x!=='object')throw Error('Ungültiges Kapitel '+(i+1)+'.');
+  const sourceSections=Array.isArray(x.sections)?x.sections:[];
+  if(sourceSections.length>30)throw Error('Kapitel '+(i+1)+' enthält zu viele Abschnitte.');
+  const id=cleanText(x.id,60);
+  if(!/^[a-z0-9_-]{1,60}$/.test(id)||used.has(id)||['start','leitfaden','einstellungen','bearbeiten','zivilstreife'].includes(id))
+   throw Error('Ungültige oder doppelte Kapitel-ID.');
+  used.add(id);
+  const title=cleanText(x.title,100),subtitle=cleanText(x.subtitle,220);
+  if(!title)throw Error('Ein Kapitel hat keinen Titel.');
+
+  // Pages CMS kann leere Abschnitts-Platzhalter ({}) speichern.
+  // Diese sollen das Laden des gesamten Handbuchs nicht blockieren.
+  const sections=sourceSections.filter(y=>{
+   if(!y||typeof y!=='object'||Array.isArray(y))return false;
+   const hasTitle=!!cleanText(y.title,120);
+   const hasText=Array.isArray(y.rules)&&y.rules.some(r=>!!cleanText(r,1600));
+   const hasImage=Array.isArray(y.images)&&y.images.some(img=>img&&typeof img.src==='string'&&img.src.trim());
+   return hasTitle||hasText||hasImage;
+  }).map((y,j)=>{
+   const st=cleanText(y.title,120)||'Abschnitt '+(j+1);
+   const sourceRules=Array.isArray(y.rules)?y.rules:[];
+   if(sourceRules.length>50)throw Error('Abschnitt '+(j+1)+' hat mehr als 50 Regeln.');
+   const rules=sourceRules.map(r=>cleanText(r,1600)).filter(Boolean);
+   const images=(Array.isArray(y.images)?y.images:[]).slice(0,5)
+    .map(img=>({src:String(img?.src||'').trim(),caption:cleanText(img?.caption,150)}))
+    .filter(img=>img.src);
+   // Nur Medien aus dem eigenen Repository zulassen.
+   if(images.some(img=>!(img.src.startsWith('/GTF-Handbuch/media/')||img.src.startsWith('/media/')||img.src.startsWith('media/'))
+     || !/\.(png|jpe?g|webp)$/i.test(img.src.split('?')[0])
+     || /[<>"'\`\\]/.test(img.src)||img.src.includes('..')))
+      throw Error('Ungültiger Bildpfad. Bitte Medien über Pages CMS hochladen.');
+   images.forEach(img=>{img.src=img.src.replace(/^\/(?:GTF-Handbuch\/)?media\//,'media/');});
+   return {title:st,rules,images};
+  });
+  return {id,title,subtitle,icon:legalIcons.includes(x.icon)?x.icon:'book-open',sections};
+ });
+}
 const defaultAppearance={theme:'dark',background:'stars',accent:'#ff962a',corners:'rounded',density:'comfortable',motion:true};
 const accentPresets=[['Orange','#ff962a'],['Rot','#ff555b'],['Blau','#4b99ff'],['Violett','#a477ff'],['Türkis','#22cbb7'],['Grün','#77d681'],['Pink','#f275ba']];
 const allowedThemes=['dark','midnight','light'],allowedBackgrounds=['stars','aurora','grid','nebula','plain'];
@@ -472,7 +493,7 @@ async function loadPublishedHandbook(){
  }catch(err){
   console.warn('GTF: Zentrale Inhalte konnten nicht geladen werden.',err);
   const announce=document.querySelector('.announcement .announce-msg');
-  if(announce)announce.textContent='Hinweis: handbook.json nicht erreichbar – Beispielinhalte sichtbar. Prüfe den Upload auf GitHub Pages.';
+  if(announce)announce.textContent='Hinweis: Handbuch-Inhalte konnten nicht geladen werden. Bitte Daten in Pages CMS prüfen.';
  }
 }
 byId('searchTrigger').addEventListener('click',openSearch);

@@ -190,13 +190,12 @@
         {
           "title": "GTF-Regeln",
           "rules": [
-            "Keine Privatf"
+            "Keine Privat Fahrzeuge in der ZIvistreife"
           ],
           "images": [
             {}
           ]
-        },
-        {}
+        }
       ]
     }
   ]

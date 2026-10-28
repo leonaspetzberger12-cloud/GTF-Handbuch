@@ -67,8 +67,16 @@
         {
           "title": "dienstkleidung",
           "rules": [
-            "Oberteil : 7\nHose : 2\nSchuhe 5\nAccessoires : 4 oder 1\nWeiteres Zubehör : alles außer die Gelbe weste",
-            "https://media.discordapp.net/attachments/1553824128002170880/1562499353141059674/image.png?ex=6ae2c82b&is=6ae176ab&hm=120f163159a8e1e82da3a2813f0fed9eea1c9b929c9b90a2fe6bc9285eab6228&=&format=webp&quality=lossless"
+            "Oberteil : 7",
+            "Schuhe 5",
+            "Accessoires : 4 oder 1\n",
+            "Weiteres Zubehör : alles außer die Gelbe weste"
+          ],
+          "images": [
+            {},
+            {
+              "src": "/GTF-Handbuch/media/image.png"
+            }
           ]
         }
       ]

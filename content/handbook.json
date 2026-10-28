@@ -166,7 +166,11 @@
             "Fahrzeugdurchsuchungen müssen mit den RP-Befehlen /try, /do oder /me ausgespielt werden.",
             "Privat Masken im Dienst  sind verboten.",
             "Gang-HQs dürfen ohne RP-Grund nicht betreten werden. Auch nicht mit Drohne.",
-            "Events dürfen nicht in Zivil Angefahren werden."
+            "Events dürfen nicht in Zivil Angefahren werden.",
+            "Maximal zwei Zivilstreifen parallel im Einsatz.",
+            "Mindestens zwei Agents pro Streife.\n",
+            "Allein fahren ist ab Senior GTF Agent erlaubt.\n",
+            "Die GTF muss als 1. Abteilung eingetragen sein um eine alleinige Zivi Streife zu machen."
           ]
         }
       ]

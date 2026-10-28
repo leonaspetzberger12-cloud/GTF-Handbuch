@@ -138,8 +138,8 @@
       ]
     },
     {
-      "id": "weiterbildung",
-      "title": "Weiterbildungsmöglichkeiten",
+      "id": "ausbildung",
+      "title": "ausbildung",
       "subtitle": "Einweisung,Einstellungstest ",
       "icon": "graduation-cap",
       "sections": [
@@ -153,8 +153,8 @@
         {
           "title": "Prüfungen",
           "rules": [
-            "Prüfungsthemen, Bestehensgrenzen und Wiederholungsregeln werden durch die Leitung veröffentlicht.",
-            "Bewertungen werden nachvollziehbar dokumentiert."
+            "Prüfungsthemen: Beweissicherung,Zivistreife,",
+            "Wiederholungsregeln: 1-3 Mal Nicht Bestehen 3 Tage Speere bei 3 Mal 14 Tage Speere"
           ]
         },
         {

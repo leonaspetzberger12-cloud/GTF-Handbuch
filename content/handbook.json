@@ -165,10 +165,11 @@
             "Keine Privat Fahrzeuge in der Zivistreife.",
             "Fahrzeugdurchsuchungen müssen mit den RP-Befehlen /try, /do oder /me ausgespielt werden.",
             "Privat Masken im Dienst  sind verboten.",
-            "Gang-HQs dürfen ohne RP-Grund nicht betreten werden. Auch NICHT mit Drohne",
-            "Events dürfen Nicht in Zivil Angefahren werden ."
+            "Gang-HQs dürfen ohne RP-Grund nicht betreten werden. Auch nicht mit Drohne.",
+            "Events dürfen nicht in Zivil Angefahren werden."
           ]
-        }
+        },
+        {}
       ]
     }
   ]

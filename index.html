@@ -347,10 +347,13 @@ function validateChapters(data){
  const images=(Array.isArray(y.images)?y.images:[]).slice(0,5)
   .map(img=>({src:String(img?.src||'').trim(),caption:cleanText(img?.caption,150)}))
   .filter(img=>img.src);
- if(images.some(img=>!(img.src.startsWith('/GTF-Handbuch/media/')||img.src.startsWith('media/'))
+ if(images.some(img=>!(img.src.startsWith('/GTF-Handbuch/media/')||img.src.startsWith('/media/')||img.src.startsWith('media/'))
    || !/\.(png|jpe?g|webp)$/i.test(img.src.split('?')[0])
    || /[<>\"'`\\]/.test(img.src)||img.src.includes('..')))
    throw Error('Ungültiger Bildpfad. Bitte Medien über Pages CMS hochladen.');
+ // Alle genehmigten Medienpfade in relative Pfade umwandeln, damit sie auf
+ // GitHub Pages (/GTF-Handbuch/) UND auf Cloudflare Pages (/) funktionieren.
+ images.forEach(img=>{img.src=img.src.replace(/^\/(?:GTF-Handbuch\/)?media\//,'media/');});
  return {title:st,rules,images};});
  return {id,title,subtitle,icon:legalIcons.includes(x.icon)?x.icon:'book-open',sections};
  });}

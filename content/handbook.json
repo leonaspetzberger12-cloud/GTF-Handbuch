@@ -177,7 +177,8 @@
             "Bodycam: Wasserzeichen muss sichtbar sein.",
             "Personen: Mindestens 3 Personen müssen bei einer Straftat zu sehen sein.\n",
             "Fahrzeuge: Kennzeichen muss erkennbar sein.\n",
-            "Beweise: Alle wichtigen Beweise müssen deutlich sichtbar sein."
+            "Beweise: Alle wichtigen Beweise müssen deutlich sichtbar sein.",
+            "Bilder: Dürfen nicht bearbeitet werden und müssen in Originalgröße bleiben.\n\nVideobeweise: Das Beweisbild muss klar erkennbar sein.\n\nKeine Symbole: Play-Zeichen oder andere störende Symbole dürfen nicht sichtbar sein bei Fotos aus Video."
           ]
         }
       ]

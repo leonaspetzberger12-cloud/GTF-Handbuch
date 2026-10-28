@@ -75,7 +75,13 @@
         {
           "title": "Dienstgrade",
           "rules": [
-            "🧠 Berater\n👑 Leitung\n🥈 Vize Leitung\n👮 Senior GTF Agent\n👮 GTF Agent\n👮 2. Abteilung\n👤  Aushilfe"
+            "🧠 Berater",
+            "👑 Leitung",
+            "🥈 Vize Leitung",
+            "👮 Senior GTF Agent",
+            "👮 GTF Agent",
+            "👮 2. Abteilung",
+            "👤  Aushilfe"
           ]
         },
         {
@@ -172,7 +178,9 @@
         {
           "title": "Ausbildungsleitung und Vize",
           "rules": [
-            "[A-018] Hakim Dark\nVize:[A-107] Moo Weshlove\nVize:[A-103] Lucaa Black"
+            "[A-018] Hakim Dark",
+            "Vize:[A-107] Moo Weshlove",
+            "Vize:[A-103] Lucaa Black"
           ]
         },
         {

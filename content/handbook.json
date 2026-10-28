@@ -63,6 +63,13 @@
             "Interne Daten, Dokumente und Gespräche gehören nicht in öffentlichkeit",
             "Dokumentationen dürfen nur mit den vorgesehenen Berechtigungen weitergegeben werden."
           ]
+        },
+        {
+          "title": "dienstkleidung",
+          "rules": [
+            "Oberteil : 7\nHose : 2\nSchuhe 5\nAccessoires : 4 oder 1\nWeiteres Zubehör : alles außer die Gelbe weste",
+            "https://media.discordapp.net/attachments/1553824128002170880/1562499353141059674/image.png?ex=6ae2c82b&is=6ae176ab&hm=120f163159a8e1e82da3a2813f0fed9eea1c9b929c9b90a2fe6bc9285eab6228&=&format=webp&quality=lossless"
+          ]
         }
       ]
     },

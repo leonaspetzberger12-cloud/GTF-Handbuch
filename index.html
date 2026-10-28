@@ -204,6 +204,7 @@ body[data-motion="off"] *,body[data-motion="off"] *:before,body[data-motion="off
 @media(max-width:580px){.editor-image-item{flex-direction:column;align-items:stretch}.editor-image-item>img{width:100%;height:160px}.chapter-gallery{grid-template-columns:1fr}}
 
 </style>
+  <link rel="stylesheet" href="zivilstreife.css" />
 </head>
 <body>
   <div class="sky" aria-hidden="true"></div>
@@ -261,6 +262,7 @@ const paths={
  'layout-dashboard':'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
  'book-open':'<path d="M12 7v14M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13h-5a4 4 0 0 0-4 3 4 4 0 0 0-4-3H3Z"/>',
  'clipboard':'<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V2h6v2.5M9 10h6M9 14h6M9 18h3"/>',
+ 'car':'<path d="M5 17H3v-5l2-6h14l2 6v5h-2M5 17v2h3v-2M16 17v2h3v-2M3 12h18M6 15h.01M18 15h.01"/><path d="M5 12l1.5-5h11L19 12"/>',
  'users':'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M16 3.2a4 4 0 0 1 0 7.6M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>',
  'shield':'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',
  'radio':'<path d="M5 16.6a10 10 0 0 1 0-9.2M9 13.6a5 5 0 0 1 0-3.2M19 7.4a10 10 0 0 1 0 9.2M15 10.4a5 5 0 0 1 0 3.2"/><circle cx="12" cy="12" r="1.5"/>',
@@ -327,7 +329,7 @@ const defaultChapters=[
 ];
 let chapters=structuredClone(defaultChapters);
 let navItems=[];
-function refreshNavItems(){navItems=[{id:'start',title:'Übersicht',icon:'layout-dashboard'},{id:'leitfaden',title:'Leitfaden',icon:'book-open'},...chapters.map(c=>({id:c.id,title:c.title,icon:c.icon})),{id:'einstellungen',title:'Einstellungen',icon:'settings'}];byId('topChapterCount').textContent=chapters.length;}
+function refreshNavItems(){navItems=[{id:'start',title:'Übersicht',icon:'layout-dashboard'},{id:'leitfaden',title:'Leitfaden',icon:'book-open'},...chapters.map(c=>({id:c.id,title:c.title,icon:c.icon})),{id:'zivilstreife',title:'Zivilstreifen-Anmeldung',icon:'car'},{id:'einstellungen',title:'Einstellungen',icon:'settings'}];byId('topChapterCount').textContent=chapters.length;}
 const byId=(id)=>document.getElementById(id);
 const pageContent=byId('pageContent');
 const storeKey='gtf-de03-handbuch-v2-editable';
@@ -339,7 +341,7 @@ function validateChapters(data){
  if(!Array.isArray(data)||!data.length||data.length>35)throw Error('Bitte 1 bis 35 Kapitel angeben.');
  const used=new Set();return data.map((x,i)=>{
  if(!x||typeof x!=='object'||!Array.isArray(x.sections)||!x.sections.length||x.sections.length>30)throw Error('Kapitel '+(i+1)+' benötigt 1 bis 30 Abschnitte.');
- const id=cleanText(x.id,60);if(!/^[a-z0-9_-]{1,60}$/.test(id)||used.has(id)||['start','leitfaden','einstellungen','bearbeiten'].includes(id))throw Error('Ungültige oder doppelte Kapitel-ID.');used.add(id);
+ const id=cleanText(x.id,60);if(!/^[a-z0-9_-]{1,60}$/.test(id)||used.has(id)||['start','leitfaden','einstellungen','bearbeiten','zivilstreife'].includes(id))throw Error('Ungültige oder doppelte Kapitel-ID.');used.add(id);
  const title=cleanText(x.title,100),subtitle=cleanText(x.subtitle,220);if(!title)throw Error('Ein Kapitel hat keinen Titel.');
  const sections=x.sections.map((y,j)=>{if(!y||typeof y!=='object'||!Array.isArray(y.rules)||!y.rules.length||y.rules.length>50)throw Error('Abschnitte müssen 1 bis 50 Regeln haben.');const st=cleanText(y.title,120);const rules=y.rules.map(r=>cleanText(r,1600)).filter(Boolean);if(!st||!rules.length)throw Error('Abschnitt '+(j+1)+' ist unvollständig.');
  const images=(Array.isArray(y.images)?y.images:[]).slice(0,5)
@@ -421,7 +423,7 @@ return `<div class="breadcrumb">GTF ${icon('chevron-right')} <strong>Einstellung
 <section class="panel"><div class="panel-header"><h2 class="panel-title">${icon('notes')} Meine Daten</h2><button class="action-btn" data-reset-appearance type="button">${icon('arrow-left')} Standarddesign wiederherstellen</button></div><div class="settings-grid"><div class="setting-row"><div><strong>Gespeicherte Favoriten</strong><p>Deine markierten Kapitel auf diesem Gerät.</p></div><span class="tag muted-tag">${saved.favorites.length}</span></div><div class="setting-row"><div><strong>Private Notizen</strong><p>Kapitel mit eigenen lokalen Notizen.</p></div><span class="tag muted-tag">${n}</span></div><div class="setting-row"><div><strong>Lokale Daten zurücksetzen</strong><p>Löscht Favoriten und Notizen, nicht dein Design.</p></div><button class="action-btn outline-danger" type="button" data-reset>${icon('trash')} Daten löschen</button></div></div></section>
 ${panel('Gut zu wissen','info','<p class="empty-note">Deine Design-Einstellungen werden automatisch in diesem Browser gespeichert und beim nächsten Besuch geladen. Auf anderen Geräten gelten sie nicht automatisch. Die Handbuch-Inhalte werden zentral über GitHub veröffentlicht. Das Farbschema änderst du nur für deinen Browser.</p>')}`;
 }
-function go(id){if(!navItems.some(x=>x.id===id))id='start';current=id;renderNav();pageContent.innerHTML=id==='start'?overview():id==='leitfaden'?guide():id==='einstellungen'?settingsPage():chapterPage(chapters.find(x=>x.id===id));const note=byId('noteInput');if(note)note.value=saved.notes[id]||'';closeSearch();closeMobile();window.scrollTo({top:0,behavior:'instant'});}
+function go(id){if(!navItems.some(x=>x.id===id))id='start';current=id;renderNav();pageContent.innerHTML=id==='start'?overview():id==='leitfaden'?guide():id==='zivilstreife'?window.zivilPage():id==='einstellungen'?settingsPage():chapterPage(chapters.find(x=>x.id===id));if(id==='zivilstreife')window.zivilInit();const note=byId('noteInput');if(note)note.value=saved.notes[id]||'';closeSearch();closeMobile();window.scrollTo({top:0,behavior:'instant'});}
 function closeMobile(){byId('sidebar').classList.remove('open');byId('mobileShade').classList.remove('show')}
 function openSearch(){byId('searchBackdrop').hidden=false;byId('globalSearch').value='';searchSelected=0;updateSearch();setTimeout(()=>byId('globalSearch').focus(),0)}
 function closeSearch(){byId('searchBackdrop').hidden=true}
@@ -485,5 +487,6 @@ go('start');
 loadPublishedHandbook();
 
 </script>
+<script src="zivilstreife.js"></script>
 </body>
 </html>

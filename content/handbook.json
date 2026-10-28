@@ -154,34 +154,6 @@
       ]
     },
     {
-      "id": "kontakte",
-      "title": "Ansprechpartner",
-      "subtitle": "Leitung und zuständige Stellen",
-      "icon": "contact",
-      "sections": [
-        {
-          "title": "AbteilungsBerater",
-          "rules": [
-            "[A-004] Leon Tutuh"
-          ]
-        },
-        {
-          "title": "Ausbildungsleitung und Vize",
-          "rules": [
-            "Leader:[A-018] Hakim Dark",
-            "Vize:[A-107] Moo Weshlove",
-            "Vize:[A-103] Lucaa Black"
-          ]
-        },
-        {
-          "title": "Support & Meldungen",
-          "rules": [
-            "Offizieller interner Meldeweg: Melde dich bei einen Der Leiter."
-          ]
-        }
-      ]
-    },
-    {
       "id": "gtf-regeln",
       "title": "GTF-Regeln",
       "subtitle": "GTF-Regeln",

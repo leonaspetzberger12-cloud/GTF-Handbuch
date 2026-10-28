@@ -89,3 +89,18 @@ content:
                   - name: caption
                     label: Bildunterschrift
                     type: string
+
+  - name: staff
+    label: Mitarbeiterliste (Zivilstreifen)
+    type: file
+    path: content/employees.json
+    format: json
+    operations:
+      delete: false
+      rename: false
+    fields:
+      - name: employees
+        label: Mitarbeiter zur Auswahl
+        type: string
+        list: true
+        description: "Hier Mitarbeiternamen eintragen. Die Namen sind auf der öffentlichen Webseite auswählbar."

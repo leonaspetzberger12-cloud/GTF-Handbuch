@@ -74,7 +74,8 @@
           ],
           "images": [
             {
-              "src": "/GTF-Handbuch/media/image.png"
+              "src": "/GTF-Handbuch/media/image.png",
+              "caption": "GTF-Kleidung"
             }
           ]
         }

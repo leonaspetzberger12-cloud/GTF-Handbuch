@@ -174,7 +174,10 @@
         {
           "title": "Vorlagenpflege",
           "rules": [
-            "Wichtig: \nBodycam mit Wasserzeichen\nMin 3 Personen am Bild die eine Straftat begehen \nFahrzeug Kennzeichen \n\nJegendliche Beweise müssen Erkennbar sein."
+            "Bodycam: Wasserzeichen muss sichtbar sein.",
+            "Personen: Mindestens 3 Personen müssen bei einer Straftat zu sehen sein.\n",
+            "Fahrzeuge: Kennzeichen muss erkennbar sein.\n",
+            "Beweise: Alle wichtigen Beweise müssen deutlich sichtbar sein."
           ]
         }
       ]

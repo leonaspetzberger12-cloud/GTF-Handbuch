@@ -1,3 +1,4 @@
+import {validateBook} from '../../../admin/payout-model.mjs';
 const FILE = 'GTF-GANGTASKFORCE-AUSZAHLUNG.xlsx';
 const COOKIE = '__Host-gtf_admin';
 const TTL = 1800;
@@ -9,7 +10,7 @@ async function tokenHash(request) { const raw = request.headers.get('Cookie')?.s
 export async function onRequest({request,env}) {
  try {
   const url=new URL(request.url), action=url.pathname.replace(/\/$/,'').split('/').pop();
-  if (!env.ADMIN_DB || !env.ADMIN_FILES || !/^\d{10,32}$/.test(env.ADMIN_PIN || '')) return json({error:'Admin-Zugang ist noch nicht eingerichtet.'},503);
+  if (!env.ADMIN_DB || !/^\d{10,32}$/.test(env.ADMIN_PIN || '')) return json({error:'Admin-Zugang ist noch nicht eingerichtet.'},503);
   if (!['GET','POST','PUT'].includes(request.method)) return json({error:'Methode nicht erlaubt.'},405);
   if(request.method!=='GET' && request.headers.get('Origin')!==url.origin) return json({error:'Zugriff abgelehnt.'},403);
   const now=Math.floor(Date.now()/1000), db=env.ADMIN_DB;
@@ -38,6 +39,22 @@ export async function onRequest({request,env}) {
   const session=token && await db.prepare('SELECT expires,pin_version FROM admin_sessions WHERE token=?').bind(token).first();
   if(!session||session.expires<=now||session.pin_version!==await hash(env.ADMIN_PIN))return json({error:'Bitte als Admin anmelden.'},401,{'Set-Cookie':cookie('',0)});
   if(action==='session' && request.method==='GET')return json({ok:true,expires:session.expires});
+  if(action==='table' && request.method==='GET'){
+   const stored=await db.prepare('SELECT payload,version FROM payout_book WHERE id=1').first();
+   if(stored)return json({book:JSON.parse(stored.payload),version:stored.version});
+   return json({book:null,version:0});
+  }
+  if(action==='table' && request.method==='PUT'){
+   if(!request.headers.get('Content-Type')?.startsWith('application/json'))return json({error:'JSON erwartet.'},400);
+   const reader=request.body?.getReader();if(!reader)return json({error:'Daten fehlen.'},400);
+   const chunks=[];let length=0;while(true){const {done,value}=await reader.read();if(done)break;length+=value.length;if(length>2000000){await reader.cancel();return json({error:'Tabelle zu groß.'},413)}chunks.push(value)}
+   const bytes=new Uint8Array(length);let offset=0;for(const c of chunks){bytes.set(c,offset);offset+=c.length}
+   let data;try{data=JSON.parse(new TextDecoder().decode(bytes));validateBook(data.book);if(!Number.isInteger(data.version)||data.version<0)throw Error('Ungültige Version.')}catch(e){return json({error:e.message},400)}
+   const result=data.version===0?await db.prepare('INSERT OR IGNORE INTO payout_book(id,payload,version) VALUES(1,?,1) RETURNING version').bind(JSON.stringify(data.book)).first():await db.prepare('UPDATE payout_book SET payload=?,version=version+1 WHERE id=1 AND version=? RETURNING version').bind(JSON.stringify(data.book),data.version).first();
+   if(!result)return json({error:'Ein anderer Admin hat inzwischen gespeichert. Änderungen als JSON sichern und die Tabelle neu laden.'},409);
+   return json({ok:true,version:result.version});
+  }
+
   if(action==='file' && request.method==='GET'){
    const file=await env.ADMIN_FILES.get(FILE);
    if(!file)return json({error:'Die Auszahlungstabelle wurde noch nicht hinterlegt.'},404);

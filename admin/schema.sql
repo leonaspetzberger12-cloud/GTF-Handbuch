@@ -9,3 +9,5 @@ CREATE TABLE IF NOT EXISTS admin_attempts (
  count INTEGER NOT NULL,
  PRIMARY KEY(key,bucket)
 );
+
+CREATE TABLE IF NOT EXISTS payout_book (id INTEGER PRIMARY KEY CHECK(id=1), payload TEXT NOT NULL, version INTEGER NOT NULL);

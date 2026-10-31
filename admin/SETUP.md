@@ -1,33 +1,30 @@
-# Geschützter Admin-Bereich auf Cloudflare Pages
+# Bearbeitbare Auszahlungstabelle aktivieren
 
-Der Code ist vorbereitet. Vor der Nutzung sind die folgenden Einstellungen im bestehenden Cloudflare-Pages-Projekt `gtf-de03` notwendig. GitHub Pages alleine führt diese serverseitige Anmeldung nicht aus. Die öffentliche Handbuchseite bleibt auch ohne Einrichtung nutzbar; der Admin-Dienst verweigert dann jeden Zugriff.
+Die Tabelle ist direkt in das Handbuch eingebaut. Über den Excel-Import lassen sich die neun Wochen und 158 Personeneinträge der bereitgestellten Datei übernehmen. Namen, Anzahlen, Multiplikationsfaktoren, Rückerstattungen, Auszahlungsstatus und Zusatzwerte aus Spalte M bleiben erhalten. Die Beträge werden aus Anzahl × Faktor und Rückerstattung berechnet; reine Zwischensummenzeilen werden durch berechnete Summen ersetzt.
 
-## Aktivieren
+## Einmalige Einrichtung im vorhandenen Cloudflare-Pages-Projekt
 
-1. Den Änderungsvorschlag nach `main` zusammenführen. Das bestehende Pages-Projekt muss dieses Repository verwenden; Projektstamm und Ausgabeverzeichnis sind der Repository-Stamm. Cloudflare muss den Ordner `functions/` als Pages Functions bereitstellen (Git-Integration oder Wrangler, kein reiner Dashboard-Dateiupload).
-2. In Cloudflare eine D1-Datenbank für Admin-Sitzungen erstellen. In deren SQL-Konsole den Inhalt von `admin/schema.sql` ausführen. Im Pages-Projekt unter Bindings die Datenbank als **ADMIN_DB** anbinden.
-3. Einen **privaten** R2-Bucket erstellen und als **ADMIN_FILES** anbinden. Öffentliche r2.dev-URLs und öffentliche Domains für diesen Bucket deaktiviert lassen.
-4. Unter den Variablen/Secrets des Pages-Projekts **ADMIN_PIN** als verschlüsseltes Secret setzen: ein zufälliger PIN mit 10 bis 32 Ziffern. Den echten PIN niemals in GitHub, HTML oder JavaScript eintragen. Es gibt keinen voreingestellten PIN.
-5. Die vorhandene Datei **GTF-GANGTASKFORCE AUSZAHLUNG.xlsx** in diesen privaten R2-Bucket hochladen und den Objektschlüssel genau **GTF-GANGTASKFORCE-AUSZAHLUNG.xlsx** nennen. Alternativ nach der ersten Admin-Anmeldung über „Datei speichern“ hochladen. Die Originaldatei wird bytegetreu gespeichert und als Excel-Datei heruntergeladen; es gibt keine automatische Google-Drive-Synchronisierung und keinen Tabelleneditor.
-6. Nach Einrichtung der Bindings und des Secrets erneut deployen. Produktionsressourcen nur an Produktion binden; für Vorschau-Deployments eigene Ressourcen/PIN verwenden oder den Admin-Bereich dort deaktiviert lassen.
+1. D1-Datenbank erstellen und `admin/schema.sql` in deren SQL-Konsole ausführen (auch bei bereits vorhandener Einrichtung nochmals ausführen). Im Pages-Projekt als **ADMIN_DB** anbinden.
+2. **ADMIN_PIN** als verschlüsseltes Secret setzen: zufälliger PIN mit 10–32 Ziffern, kein voreingestellter PIN. Nicht in GitHub speichern.
+3. Nach der ersten Anmeldung **Excel / JSON importieren** wählen, die bereitgestellte Auszahlungstabelle auswählen und **Änderungen speichern** drücken. Die Daten werden direkt in der privaten D1-Datenbank gespeichert, nicht in GitHub.
+4. Das bestehende Cloudflare-Pages-Projekt aus diesem Repository/Branch `main` erneut bereitstellen. Projekt- und Ausgabeverzeichnis: Repository-Stamm. Pages Functions aus `functions/` müssen mitdeployt werden. GitHub Pages alleine kann diesen Admin-Bereich nicht ausführen.
+
+R2 ist für die bearbeitbare Tabelle nicht nötig. Der frühere optionale XLSX-Dateiabruf bleibt nur als separate API für eine bestehende ADMIN_FILES-R2-Bindung erhalten und ist keine Synchronisierung mit der bearbeiteten Tabelle. Excel-Original und Google-Drive-Original werden nicht verändert.
 
 ## Bedienung
 
-Fünfmal zügig auf den GTF-Markennamen bzw. das Logo oben links klicken, auch auf Mobilgeräten. Alternativ **Strg + Alt + A** drücken. Der Zugang steht nicht in der Navigation. Der Einstieg ist nur unauffällig, kein Sicherheitsmechanismus: jede Datei-Anfrage wird zusätzlich auf dem Server geprüft.
+Fünfmal zügig auf den GTF-Namen/das Logo klicken oder Strg+Alt+A drücken. Mit PIN anmelden. Kalenderwoche wählen, Werte direkt bearbeiten, danach **Änderungen speichern**. Alle Admins sehen nach Neuladen den zentral gespeicherten Stand. Neue Personen und Wochen sind möglich. Die neue Woche übernimmt Namen und Faktoren, setzt Anzahlen, Rückerstattung und Auszahlungsstatus zurück. CSV exportiert die angezeigte Woche, JSON-Sicherung alle Wochen einschließlich ungespeicherter Änderungen.
 
-PIN eingeben → „Excel-Datei abrufen“. Admins können über die Dateiauswahl die Tabelle für alle Admins ersetzen (maximal 10 MB). Die Anmeldung berechtigt ausschließlich zum privaten Dateiabruf/-austausch, nicht zum Ändern der Handbuchtexte oder zu GitHub-/Cloudflare-Verwaltung.
+Bei zeitgleichen Änderungen blockiert der Server das Überschreiben eines neueren Stands. Dann eigene Änderungen als JSON sichern, neu laden und abgleichen. Eine JSON-Sicherung kann über denselben Import-Button wieder eingelesen werden. Die Sitzung endet nach 30 Minuten, Abmeldung oder PIN-Wechsel. Bei Ablauf gehen nicht gespeicherte Änderungen verloren. Vor Ablauf speichern.
 
-Die Sitzung endet nach 30 Minuten oder mit „Abmelden“. Eine PIN-Änderung macht bestehende Sitzungen ungültig. Maximal fünf Anmeldeversuche je IP und 50 insgesamt innerhalb eines festen 15-Minuten-Zeitfensters sind erlaubt. Der globale Grenzwert schützt gegen verteiltes PIN-Raten, kann aber unter Angriff auch berechtigte Anmeldungen zeitweilig blockieren.
+Es gelten fünf Anmeldeversuche je IP und 50 insgesamt pro festem 15-Minuten-Fenster. Der globale Grenzwert kann bei Angriffen auch gültige Anmeldungen zeitweilig blockieren. Produktionsdatenbank und Secrets nicht an öffentliche Vorschau-Deployments binden.
 
-## Prüfung nach Deployment
+## Prüfung nach Aktivierung
 
-- Ohne Anmeldung `/api/admin/file` öffnen: 401, keine Datei.
-- Falschen PIN eingeben: keine Anmeldung. Sechster Versuch im Zeitfenster: 429.
-- Mit richtigem PIN anmelden, Datei abrufen und mit dem Original vergleichen.
-- Abmelden und den Dateiabruf erneut versuchen: 401.
-- Testen, dass der R2-Bucket weder eine öffentliche URL noch eine öffentliche Domain anbietet.
-- Bei „Admin-Zugang ist noch nicht eingerichtet“ Bindings und Secret prüfen; bei 503 nach Einrichtung D1-Schema und Cloudflare-Logs prüfen. Secrets und PIN niemals protokollieren.
+- Ohne Anmeldung: `/api/admin/table` liefert 401 und keine Tabellendaten.
+- Mit PIN: alle neun Wochen erscheinen; Originalwerte stichprobenartig vergleichen.
+- Einen Wert bearbeiten und speichern, neu laden: Änderung bleibt erhalten.
+- Zwei Browser mit demselben Stand öffnen: nach Speichern im ersten Browser muss Speichern im zweiten einen Konflikt anzeigen.
+- Abmelden: erneuter Datenabruf liefert 401.
 
-Lokale Logiktests: `node --test tests/admin.test.mjs`. Diese prüfen mit simulierten Bindings Zugriffsschutz, Versuchslimit, Ablauf, PIN-Wechsel, Upload und Abmeldung. Eine echte Cloudflare-Deployment-Prüfung bleibt zusätzlich erforderlich.
-
-Cloudflare-Dokumentation: https://developers.cloudflare.com/pages/functions/bindings/
+Lokale Tests: `node --test tests/*.test.mjs`. Cloudflare-Dokumentation: https://developers.cloudflare.com/pages/functions/bindings/

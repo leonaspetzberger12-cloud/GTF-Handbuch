@@ -1,0 +1,34 @@
+import {importXlsx} from './xlsx-import.mjs';
+import {validateBook,total} from './payout-model.mjs';
+export function createEditor(root,api,message){
+ let book=null,version=0,index=0,dirty=false;
+ const fmt=n=>new Intl.NumberFormat('de-DE',{maximumFractionDigits:2}).format(n);
+ const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n};
+ const button=(label,fn)=>{const n=el('button',label,'action-btn');n.type='button';n.onclick=fn;return n};
+ const mark=()=>{dirty=true;status.textContent='Ungespeicherte Änderungen';updateTotals()};
+ const toolbar=el('div',undefined,'payout-toolbar'),select=el('select');select.setAttribute('aria-label','Kalenderwoche');
+ const status=el('span','', 'panel-subtitle'), summary=el('div',undefined,'payout-summary'),settings=el('div',undefined,'payout-toolbar'), scroller=el('div',undefined,'payout-scroll'),table=el('table'),body=el('tbody');
+ const save=button('Änderungen speichern',async()=>{if(!book)return;save.disabled=true;root.inert=true;try{validateBook(book);const r=await api('table',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({book,version})});version=(await r.json()).version;dirty=false;status.textContent='Für alle Admins gespeichert';message('Änderungen gespeichert.')}catch(e){message(e.message)}finally{save.disabled=false;root.inert=false}});
+ const download=(name,text,type)=>{const url=URL.createObjectURL(new Blob([text],{type}));const a=el('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+ const picker=el('input');picker.type='file';picker.accept='.xlsx,.json';picker.hidden=true;picker.setAttribute('aria-label','Auszahlungstabelle importieren');root.append(picker);
+ picker.onchange=async()=>{const file=picker.files[0];if(!file)return;try{if(file.size>10*1024*1024)throw Error('Maximal 10 MB erlaubt.');const imported=validateBook(file.name.toLowerCase().endsWith('.xlsx')?await importXlsx(file):JSON.parse(await file.text()));if(book&&!confirm('Alle Wochen durch den Import ersetzen? Erst Speichern übernimmt die Änderung für alle Admins.'))return;book=imported;index=0;dirty=true;render();status.textContent='Importiert – bitte Änderungen speichern';message('Import geprüft: '+book.sheets.length+' Wochen. Jetzt speichern.')}catch(e){message(e.message)}finally{picker.value=''}};
+ toolbar.append(select,save,button('Excel / JSON importieren',()=>picker.click()),button('Neu laden',async()=>{if(dirty&&!confirm('Ungespeicherte Änderungen verwerfen?'))return;try{await load()}catch(e){message(e.message)}}),button('JSON-Sicherung',()=>{if(book)download('GTF-Auszahlungen.json',JSON.stringify(book,null,2),'application/json')}),button('CSV exportieren',()=>{
+  if(!book)return;const s=book.sheets[index],safe=v=>'"'+String(v).replace(/^[=+@-]/,"'$&").replaceAll('"','""')+'"';
+  const rows=[['Name',s.labelA,'Betrag A',s.labelB,'Betrag B','Rückerstattung','Gesamtsumme','Ausgezahlt','Hinweis'],...s.rows.map(r=>[r.name,r.countA,r.countA*s.rateA,r.countB,r.countB*s.rateB,r.refund,total(s,r),r.paid?'Ja':'Nein',r.note])];
+  download('GTF-'+s.name+'.csv','\ufeff'+rows.map(r=>r.map(safe).join(';')).join('\r\n'),'text/csv;charset=utf-8');
+ }),status);
+ root.append(toolbar,settings,summary,scroller);scroller.append(table);
+ let totalCells=[];
+ function updateTotals(){if(!book)return;const s=book.sheets[index];let sum=0,paid=0;for(const r of s.rows){const t=total(s,r);sum+=t;if(r.paid)paid+=t}summary.textContent=`Gesamt: ${fmt(sum)} · Ausgezahlt: ${fmt(paid)} · Offen: ${fmt(sum-paid)} · ${s.rows.length} Personen`;for(const c of totalCells){c.a.textContent=fmt(c.row.countA*s.rateA);c.b.textContent=fmt(c.row.countB*s.rateB);c.total.textContent=fmt(total(s,c.row))}}
+ function input(value,type,label,onChange){const n=el('input');n.type=type;n.setAttribute('aria-label',label);if(type==='checkbox')n.checked=value;else n.value=value;if(type==='number'){n.step='any'}n.addEventListener('change',()=>{onChange(type==='checkbox'?n.checked:type==='number'?(n.value===''?NaN:Number(n.value)):n.value);mark()});return n}
+ function render(){if(!book)return;select.replaceChildren(...book.sheets.map((s,i)=>{const o=el('option',s.name);o.value=i;return o}));select.value=index;const s=book.sheets[index];settings.replaceChildren();for(const [key,label] of [['rateA',s.labelA],['rateB',s.labelB]]){const lab=el('label','Faktor '+label+' ');lab.append(input(s[key],'number','Faktor '+label,v=>s[key]=v));settings.append(lab)}
+  settings.append(button('Person hinzufügen',()=>{s.rows.push({id:crypto.randomUUID(),name:'Neue Person',countA:0,countB:0,refund:0,paid:false,note:''});mark();render();body.lastElementChild?.querySelector('input')?.focus()}),button('Neue Woche',()=>{const name=prompt('Name der neuen Kalenderwoche (z. B. KW 42)');if(!name)return;if(book.sheets.some(s=>s.name===name)||name.length>40){message('Bitte einen eindeutigen Namen mit maximal 40 Zeichen eingeben.');return}book.sheets.push({name,labelA:s.labelA,labelB:s.labelB,rateA:s.rateA,rateB:s.rateB,rows:s.rows.map(r=>({...r,id:crypto.randomUUID(),countA:0,countB:0,refund:0,paid:false,note:''}))});index=book.sheets.length-1;mark();render()}));
+  const head=el('thead'),tr=el('tr');for(const label of ['Name',s.labelA,'Betrag',s.labelB,'Betrag','Rückerstattung','Gesamtsumme','Ausgezahlt','Hinweis / Zusatzwert',''])tr.append(el('th',label));head.append(tr);body.replaceChildren();totalCells=[];
+  for(const r of s.rows){const row=el('tr');const cells={row:r};for(const k of ['name','countA','a','countB','b','refund','total','paid','note','delete']){const td=el('td');if(['a','b','total'].includes(k)){cells[k]=td;td.className='payout-number'}else if(k==='delete'){td.append(button('Entfernen',()=>{if(confirm(r.name+' entfernen?')){s.rows=s.rows.filter(x=>x!==r);mark();render()}}))}else{td.append(input(r[k],k==='paid'?'checkbox':['name','note'].includes(k)?'text':'number',r.name+' – '+k,v=>r[k]=v))}row.append(td)}totalCells.push(cells);body.append(row)}table.replaceChildren(head,body);updateTotals();
+ }
+ select.onchange=()=>{index=Number(select.value);render()};
+ async function load(){const r=await api('table');const data=await r.json();book=data.book?validateBook(data.book):null;version=data.version;if(!book){reset();status.textContent='Noch keine Daten: Excel-Datei importieren und speichern.';return}index=Math.min(index,book.sheets.length-1);dirty=false;status.textContent='Gespeicherter Stand';render()}
+ function reset(){book=null;version=0;dirty=false;body.replaceChildren();summary.textContent='';settings.replaceChildren();select.replaceChildren();status.textContent=''}
+ window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+ return {load,reset,isDirty:()=>dirty};
+}
